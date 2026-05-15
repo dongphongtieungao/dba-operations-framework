@@ -1,0 +1,96 @@
+tôi xin đề xuất một bộ tài liệu tác nghiệp toàn diện. Mục tiêu của bộ tài liệu này là hướng tới triết lý vận hành: "Mọi thao tác đều phải được kiểm soát, có thể đo lường và tự động hóa", nhằm loại bỏ hoàn toàn các thao tác thủ công cảm tính (ClickOps).
+ 
+Dưới đây là cấu trúc chi tiết, được chia thành 4 tầng, từ nền tảng đến thực thi.
+ 
+---
+ 
+TẦNG 1: CHÍNH SÁCH (POLICIES) - "Bộ Luật Bất Di Bất Dịch"
+ 
+Đây là tầng cao nhất, định nghĩa các nguyên tắc nền tảng, hiếm khi thay đổi và mang tính bắt buộc.
+ 
+1.1. Chính sách Quản lý Vòng đời Dữ liệu (Data Lifecycle Management Policy)
+ 
+· Mục đích: Phân loại dữ liệu để áp dụng đúng biện pháp bảo vệ, lưu trữ và hủy bỏ.
+· Nội dung chính:
+  · Phân loại dữ liệu: Định nghĩa các cấp độ (P0 - Công khai, P1 - Nội bộ, P2 - Nhạy cảm, P3 - Bí mật cao/PCI DSS/PII).
+  · Chính sách lưu trữ: Quy định dữ liệu nóng (SSD), ấm (HDD), lạnh (Object Storage) và thời gian lưu trữ cho từng loại dựa trên yêu cầu pháp lý và kinh doanh.
+  · Chính sách hủy dữ liệu: Quy trình hủy dữ liệu an toàn, không thể khôi phục, đặc biệt với dữ liệu cấp P2, P3.
+ 
+1.2. Chính sách Bảo mật Cơ sở dữ liệu (Database Security Policy)
+ 
+· Mục đích: Thiết lập tuyến phòng thủ đầu tiên và kiểm soát truy cập dữ liệu.
+· Nội dung chính:
+  · Nguyên tắc Đặc quyền Tối thiểu: Con người không có quyền SYSDBA/SUPERUSER trên Production. Mọi truy cập phải qua tài khoản máy móc (service accounts) với quyền hạn giới hạn.
+  · Mã hóa: Bắt buộc mã hóa dữ liệu "at-rest" (TDE) và "in-transit" (TLS 1.2+). Kèm theo chính sách quản lý khóa (Key Management).
+  · Che giấu dữ liệu: Môi trường non-production (Dev, Test) bắt buộc sử dụng dữ liệu đã được làm mờ (data masking), tuyệt đối không dùng dữ liệu thật.
+  · Kiểm toán: Bắt buộc bật audit log chi tiết cho mọi thay đổi schema và truy cập dữ liệu nhạy cảm.
+ 
+1.3. Chính sách Quản lý Thay đổi (Change Management Policy)
+ 
+· Mục đích: Đảm bảo mọi thay đổi lên hệ thống đều được kiểm soát, không gây gián đoạn ngoài dự kiến.
+· Nội dung chính:
+  · Định nghĩa loại thay đổi: Thay đổi chuẩn (đã được phê duyệt trước), Thay đổi khẩn cấp, Thay đổi thông thường.
+  · Quy trình phê duyệt: Bắt buộc peer-review cho mọi thay đổi code/SQL. Thay đổi lớn cần phê duyệt của Change Advisory Board (CAB).
+  · Cửa sổ bảo trì: Định nghĩa rõ khung giờ được phép thực hiện thay đổi cho từng môi trường.
+ 
+---
+ 
+TẦNG 2: QUY TRÌNH VẬN HÀNH CHUẨN (SOPs) - "Sách Hướng Dẫn Chiến Đấu"
+ 
+Các tài liệu "cầm tay chỉ việc" cho từng tác vụ. Mỗi SOP phải có cấu trúc: Mục đích, Phạm vi, Điều kiện tiên quyết, Các bước thực hiện chi tiết, Bước kiểm tra/hoàn tác (rollback), Cảnh báo rủi ro.
+ 
+2.1. SOP Vận hành Hàng ngày
+ 
+· SOP-001: Kiểm tra sức khỏe hàng ngày (Daily Health Check): Các bước kiểm tra trạng thái instance, disk usage, replication lag, failed login attempts, error log bất thường.
+· SOP-002: Quản lý Tài khoản và Phân quyền: Quy trình tạo/xóa tài khoản, cấp/thu hồi quyền dựa trên mẫu yêu cầu đã được phê duyệt.
+· SOP-003: Sao lưu và Phục hồi (Backup & Restore): Đây là SOP quan trọng nhất. Bao gồm quy trình kiểm tra backup job, tạo backup ad-hoc, và các kịch bản phục hồi chi tiết (point-in-time recovery, disaster recovery). Phải được diễn tập thường xuyên.
+ 
+2.2. SOP Xử lý Sự cố và Bảo trì
+ 
+· SOP-004: Xử lý sự cố Hiệu suất (Performance Troubleshooting): Quy trình từng bước: Nhận diện triệu chứng -> Xác định câu lệnh gây lỗi -> Phân tích Execution Plan -> Hành động khẩn cấp (kill session) -> Phân tích gốc rễ.
+· SOP-005: Quy trình Failover/High Availability (HA): Kịch bản chi tiết cho failover chủ động (bảo trì) và thụ động (sự cố). Bao gồm lệnh promote cụ thể, kiểm tra tính toàn vẹn dữ liệu và cập nhật DNS/connection string.
+· SOP-006: Quy trình Nâng cấp (Upgrade): Kế hoạch từ pre-upgrade checks, cài đặt, đến post-upgrade tasks (update statistics) và kế hoạch rollback chi tiết đến từng phút.
+· SOP-007: Xử lý khủng hoảng Hỏng Dữ liệu (Data Corruption): Cấp cứu: Isolation, xác định phạm vi hỏng bằng CHECKSUM/amcheck, quyết định sửa bằng lệnh khẩn cấp hay phục hồi từ backup.
+ 
+---
+ 
+TẦNG 3: TIÊU CHUẨN VÀ HƯỚNG DẪN (STANDARDS & GUIDELINES) - "Khuôn Mẫu Thiết Kế"
+ 
+Các tài liệu kỹ thuật quy định cách làm "đúng" để đảm bảo sự đồng bộ và an toàn.
+ 
+3.1. Tiêu chuẩn Thiết kế và Phát triển
+ 
+· Quy ước đặt tên (Naming Convention): Quy tắc cho Instance, Database, Schema, Table, Column, Index, Constraint. (Ví dụ: PK: pk_<bảng>, FK: fk_<bảng_con>_<bảng_cha>, Index: idx_<bảng>_<cột>).
+· Hướng dẫn Thiết kế Schema: Nguyên tắc chọn kiểu dữ liệu (UUID vs BIGSERIAL), bắt buộc với khóa chính, chuẩn hóa 3NF, chiến lược Partitioning.
+· Quy tắc viết SQL: Hướng dẫn format, bắt buộc dùng alias, liệt kê các anti-patterns cần tránh (như SELECT *, dùng hàm trên cột trong mệnh đề WHERE).
+ 
+3.2. Tiêu chuẩn Giám sát và Cảnh báo
+ 
+· Giám sát (Monitoring): Định nghĩa các "Golden Signals" (Latency, Traffic, Errors, Saturation) cho database. Cụ thể hóa thành các metrics: Connection count, replication delay, deadlock/sec, buffer cache hit ratio.
+· Cảnh báo (Alerting): Phân loại mức độ nghiêm trọng (P1 -> P5), ngưỡng kích hoạt và kênh thông báo tương ứng (P1 gọi điện thoại, P3 gửi Slack). Mỗi alert phải gắn với đường dẫn đến SOP xử lý tương ứng.
+ 
+---
+ 
+TẦNG 4: MẪU BIỂU VÀ CÔNG CỤ (TEMPLATES & RUNBOOKS)
+ 
+Đây là các công cụ thực thi, biến lý thuyết thành hành động cụ thể.
+ 
+4.1. Mẫu biểu (Templates)
+ 
+· SR-001: Mẫu Yêu cầu Dịch vụ (Service Request): Form yêu cầu tạo DB, user, cấp quyền, restore dữ liệu...
+· RFC-001: Mẫu Đề xuất Thay đổi (Request for Change): Form bắt buộc điền: Mô tả, Lý do, Người thực hiện, Kế hoạch thực hiện/kiểm tra/rollback, Đánh giá rủi ro.
+· PIR-001: Mẫu Phân tích Sự cố (Post-Incident Review): Báo cáo không đổ lỗi, tập trung vào Timeline chính xác, Nguyên nhân gốc rễ, Ảnh hưởng, Hành động khắc phục và Biện pháp ngăn chặn tái diễn.
+ 
+4.2. Runbook Tự động hóa
+ 
+· Đây là bản nâng cấp của SOP, được viết dưới dạng script hoặc playbook (Ansible, Terraform).
+· Ví dụ: SOP "Thêm một Replica mới" sẽ được thay bằng một Ansible playbook add_new_replica.yml. Người vận hành chỉ cần nhập IP và chạy lệnh, giảm thiểu tối đa sai sót thủ công.
+ 
+---
+ 
+Lộ trình triển khai đề xuất:
+ 
+1. Giai đoạn 1 (Sinh tồn): Hoàn thiện SOP-003 (Backup & Restore) và SOP-005 (Failover).
+2. Giai đoạn 2 (Ổn định): Xây dựng Chính sách (Bảo mật, Phân quyền) và SOP Vận hành hàng ngày.
+3. Giai đoạn 3 (Tối ưu): Phát triển Tiêu chuẩn Thiết kế và chuyển đổi SOP thành Runbook tự động.
+4. Giai đoạn 4 (Văn hóa): Biến bộ tài liệu thành "tài liệu sống". Mỗi sự cố mới phải tạo ra một SOP mới hoặc cập nhật SOP cũ.

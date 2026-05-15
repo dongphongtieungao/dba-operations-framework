@@ -1,0 +1,62 @@
+#	Tên tài liệu	Order	Mục đích	Mô tả tóm tắt nội dung tài liệu
+1	DBA Operations Framework Overview	3	Định nghĩa tổng thể hệ điều hành tác nghiệp DBA	Mô tả mục tiêu, phạm vi, nguyên tắc vận hành, cấu trúc tài liệu, cách sử dụng tài liệu trong công việc DBA hằng ngày
+2	DBA Service Catalog	3	Chuẩn hóa danh mục dịch vụ DBA	Liệt kê các dịch vụ DBA cung cấp như tạo database, cấp quyền, restore, tuning, failover, review schema, kèm input, output, SLA, SOP và runbook tương ứng
+3	DBA Operating Model	3	Định nghĩa mô hình vận hành DBA	Mô tả vai trò DBA trong vận hành, luồng tiếp nhận ticket, luồng xử lý change, incident, service request, escalation và phối hợp với app, infra, security
+4	DBA RACI Matrix	3	Làm rõ trách nhiệm giữa các bên	Xác định ai thực hiện, ai chịu trách nhiệm cuối cùng, ai cần tham vấn, ai cần được thông báo trong các hoạt động như backup, restore, failover, schema change, RCA
+5	DBA Document Governance Standard	3	Quản trị vòng đời tài liệu	Quy định cấu trúc tài liệu, mã tài liệu, owner, reviewer, approver, version, trạng thái tài liệu, chu kỳ review, tiêu chí archive hoặc deprecate
+6	Data Lifecycle Management Policy	2	Quản lý vòng đời dữ liệu	Quy định phân loại dữ liệu, lưu trữ nóng, ấm, lạnh, retention, archive, purge, hủy dữ liệu an toàn và yêu cầu tuân thủ
+7	Database Security Policy	2	Thiết lập nguyên tắc bảo mật database	Quy định least privilege, mã hóa at rest, mã hóa in transit, quản lý khóa, audit log, tài khoản service, dữ liệu nhạy cảm và data masking
+8	Database Access Control Policy	3	Kiểm soát truy cập database	Quy định nguyên tắc tạo user, phân quyền, thu hồi quyền, quyền tạm thời, quyền production, kiểm tra định kỳ quyền và xử lý tài khoản không còn sử dụng
+9	Database Change Management Policy	2	Kiểm soát thay đổi trên database	Định nghĩa normal change, standard change, emergency change, quy trình review, phê duyệt, maintenance window, rollback và evidence bắt buộc
+10	Backup and Restore Policy	1	Định nghĩa nguyên tắc bảo vệ dữ liệu	Quy định RPO, RTO, backup type, retention, encryption, offsite backup, restore drill, trách nhiệm kiểm tra và tiêu chí backup thành công
+11	Database Audit and Compliance Policy	2	Đảm bảo khả năng kiểm toán	Quy định nội dung cần audit, thời gian lưu audit log, truy cập dữ liệu nhạy cảm, thay đổi schema, thay đổi quyền và kiểm tra tuân thủ định kỳ
+12	Database HA and DR Policy	1	Chuẩn hóa yêu cầu sẵn sàng cao và khôi phục thảm họa	Quy định mô hình HA, DR, RTO, RPO, failover test, switchover test, disaster recovery drill và tiêu chí nghiệm thu
+13	Database Naming Convention Standard	5	Chuẩn hóa quy ước đặt tên	Quy định cách đặt tên instance, database, schema, table, column, index, constraint, role, user, job, backup file và monitoring object
+14	Database Schema Design Standard	5	Chuẩn hóa thiết kế schema	Quy định nguyên tắc chọn kiểu dữ liệu, khóa chính, khóa ngoại, chuẩn hóa, denormalization có kiểm soát, partitioning, audit column và soft delete
+15	SQL Coding Standard	5	Chuẩn hóa cách viết SQL	Quy định format SQL, alias, join, transaction, error handling, tránh SELECT sao, tránh function trên indexed column, tránh implicit conversion và các anti pattern phổ biến
+16	Database Indexing Standard	5	Chuẩn hóa thiết kế index	Quy định nguyên tắc tạo index, composite index, covering index, unique index, index maintenance, kiểm soát index dư thừa và đánh giá tác động write overhead
+17	Database Partitioning Standard	5	Chuẩn hóa chiến lược partitioning	Mô tả khi nào cần partitioning, chọn partition key, retention theo partition, purge bằng partition, kiểm tra plan và rủi ro vận hành
+18	Database Monitoring Standard	2	Chuẩn hóa quan sát database	Định nghĩa golden signals cho database, metric bắt buộc, dashboard tối thiểu, log cần thu thập, correlation với app, infra và ticket
+19	Database Alerting Standard	2	Chuẩn hóa cảnh báo database	Quy định severity P1 đến P5, ngưỡng cảnh báo, kênh thông báo, escalation, alert owner và mapping mỗi alert với SOP xử lý tương ứng
+20	Database Capacity Management Standard	2	Quản lý dung lượng và tăng trưởng	Quy định theo dõi disk, IOPS, CPU, memory, connection, transaction log, WAL, temp space, growth forecast và ngưỡng mở rộng tài nguyên
+21	SOP Daily Database Health Check	2	Chuẩn hóa kiểm tra hằng ngày	Hướng dẫn kiểm tra trạng thái instance, disk, backup, replication, error log, failed login, blocking, alert tồn đọng và ghi nhận evidence
+22	SOP User and Permission Management	4	Chuẩn hóa tạo, sửa, xóa user	Hướng dẫn xử lý yêu cầu cấp quyền, kiểm tra phê duyệt, tạo user, gán role, thu hồi quyền, kiểm tra sau thay đổi và lưu evidence
+23	SOP Backup Operation	1	Chuẩn hóa vận hành backup	Hướng dẫn kiểm tra backup job, backup ad hoc, xử lý backup failed, kiểm tra backup chain, kiểm tra dung lượng backup và xác nhận backup hợp lệ
+24	SOP Restore Operation	1	Chuẩn hóa phục hồi dữ liệu	Hướng dẫn restore full, incremental, transaction log hoặc WAL, point in time recovery, restore sang môi trường test, validation sau restore và xác nhận với requester
+25	SOP Performance Troubleshooting	4	Chuẩn hóa điều tra hiệu năng	Hướng dẫn nhận diện triệu chứng, kiểm tra wait, lock, blocking, slow query, execution plan, index, statistics, resource saturation và đề xuất khắc phục
+26	SOP Blocking and Deadlock Handling	4	Chuẩn hóa xử lý blocking và deadlock	Hướng dẫn xác định blocker, victim, lock chain, query liên quan, quyết định kill session, thu thập evidence và đề xuất phòng ngừa tái diễn
+27	SOP Replication Troubleshooting	2	Chuẩn hóa xử lý lỗi replication	Hướng dẫn kiểm tra replication lag, broken replication, slot, binlog, WAL, Always On, Data Guard hoặc replica status theo từng DBMS
+28	SOP HA Failover and Switchover	1	Chuẩn hóa chuyển đổi HA	Hướng dẫn failover chủ động, failover bị động, kiểm tra dữ liệu, kiểm tra endpoint, cập nhật application connection, rollback và truyền thông sự cố
+29	SOP Disaster Recovery Drill	1	Chuẩn hóa diễn tập DR	Hướng dẫn chuẩn bị kịch bản DR, khôi phục tại site khác, đo RTO, đo RPO, kiểm tra ứng dụng, ghi nhận lỗi và lập báo cáo cải tiến
+30	SOP Database Upgrade and Patch	4	Chuẩn hóa nâng cấp và vá lỗi	Hướng dẫn pre check, compatibility check, backup trước nâng cấp, thực hiện patch, post check, update statistics, rollback và kiểm tra ứng dụng
+31	SOP Data Corruption Handling	2	Chuẩn hóa xử lý hỏng dữ liệu	Hướng dẫn isolation, xác định phạm vi lỗi, kiểm tra checksum hoặc công cụ tương ứng, quyết định repair hoặc restore, báo cáo rủi ro mất dữ liệu
+32	SOP Schema Change Review	5	Chuẩn hóa review thay đổi schema	Hướng dẫn review DDL, impact index, locking risk, data migration risk, rollback script, downtime, compatibility và phê duyệt trước khi triển khai
+33	SOP Query Tuning Review	5	Chuẩn hóa review truy vấn chậm	Hướng dẫn thu thập query, plan, runtime metric, cardinality, index usage, wait event, đề xuất index hoặc rewrite query và xác nhận before after
+34	SOP Data Masking for Non Production	5	Đảm bảo môi trường test không dùng dữ liệu thật	Hướng dẫn phân loại dữ liệu nhạy cảm, masking rule, kiểm tra dữ liệu sau masking, phê duyệt và evidence trước khi bàn giao môi trường
+35	SOP Database Decommission	5	Chuẩn hóa loại bỏ database không còn dùng	Hướng dẫn xác nhận owner, kiểm tra dependency, backup cuối, archive, revoke access, disable job, xóa database và cập nhật CMDB
+36	Runbook Database Provisioning	5	Tự động hóa tạo database	Script hoặc playbook tạo database theo chuẩn naming, parameter, owner, backup policy, monitoring, alerting và ghi nhận evidence
+37	Runbook User Provisioning	5	Tự động hóa tạo user và cấp quyền	Script hoặc playbook tạo user, gán role, kiểm tra quyền, xuất evidence và liên kết ticket yêu cầu
+38	Runbook Backup Verification	1	Tự động hóa kiểm tra backup	Script kiểm tra trạng thái backup, backup age, backup chain, dung lượng, lỗi gần nhất và sinh báo cáo daily
+39	Runbook Restore Validation	1	Tự động hóa kiểm tra sau restore	Script chạy validation query, kiểm tra object count, row count, checksum nếu có, trạng thái ứng dụng và xuất kết quả nghiệm thu
+40	Runbook Add Replica	2	Tự động hóa bổ sung replica	Playbook thêm replica mới, cấu hình replication, kiểm tra lag, thêm monitoring, thêm alert và cập nhật inventory
+41	Runbook Failover Execution	1	Tự động hóa thao tác failover	Script hoặc playbook thực hiện promote, kiểm tra primary mới, kiểm tra replica, endpoint, application connection và log toàn bộ quá trình
+42	Runbook Database Health Check	2	Tự động hóa health check định kỳ	Script thu thập metric, trạng thái instance, disk, connection, replication, backup, error log và xuất báo cáo ngắn
+43	Runbook Capacity Report	2	Tự động hóa báo cáo dung lượng	Script tổng hợp database size, growth rate, disk usage, forecast, top growth database và cảnh báo rủi ro hết dung lượng
+44	Template Service Request	2	Chuẩn hóa yêu cầu dịch vụ DBA	Form yêu cầu tạo database, tạo user, cấp quyền, restore, backup ad hoc, tuning, export dữ liệu, kèm thông tin bắt buộc
+45	Template Request for Change	2	Chuẩn hóa đề xuất thay đổi	Form mô tả thay đổi, lý do, phạm vi ảnh hưởng, kế hoạch triển khai, kế hoạch kiểm tra, rollback, rủi ro và người phê duyệt
+46	Template Emergency Change	2	Chuẩn hóa thay đổi khẩn cấp	Form riêng cho sự cố khẩn cấp, ghi rõ lý do bypass quy trình thường, tác động, người approve, evidence và post review bắt buộc
+47	Template Post Incident Review	2	Chuẩn hóa phân tích sau sự cố	Form ghi nhận timeline, impact, root cause, contributing factors, corrective action, preventive action, owner và deadline
+48	Template Operation Evidence	1	Chuẩn hóa bằng chứng vận hành	Mẫu ghi nhận ticket ID, người thực hiện, thời gian, lệnh đã chạy, output, ảnh monitoring, kết quả kiểm tra và xác nhận hoàn tất
+49	Template Restore Drill Report	1	Chuẩn hóa báo cáo diễn tập restore	Mẫu ghi nhận database, backup source, thời gian restore, RTO thực tế, RPO thực tế, lỗi phát sinh, kết quả validation và action item
+50	Template Failover Drill Report	1	Chuẩn hóa báo cáo diễn tập failover	Mẫu ghi nhận hệ thống, kịch bản, thời gian chuyển đổi, lỗi phát sinh, dữ liệu sau failover, kết quả ứng dụng và khuyến nghị cải tiến
+51	Template Monthly DBA Report	2	Chuẩn hóa báo cáo vận hành tháng	Mẫu tổng hợp ticket, incident, change, backup, restore, capacity, availability, top risk, automation progress và action item
+52	DBA KPI and Metrics Catalog	2	Định nghĩa chỉ số đo vận hành DBA	Mô tả các chỉ số như backup success rate, restore success rate, MTTR, change success rate, rollback rate, automation rate, capacity risk và SLA compliance
+53	DBA Automation Candidate Matrix	2	Ưu tiên tự động hóa tác vụ DBA	Bảng đánh giá task theo tần suất, rủi ro, effort thủ công, khả năng chuẩn hóa và thứ tự ưu tiên tự động hóa
+54	DBA Risk Register	2	Theo dõi rủi ro vận hành database	Danh sách rủi ro như backup chưa kiểm chứng, thiếu DR drill, quyền production quá rộng, replication lag, capacity risk, kèm owner và mitigation
+55	DBA Knowledge Base Index	5	Làm cổng tra cứu tri thức DBA	Tài liệu map toàn bộ policy, standard, SOP, runbook, template, report theo chủ đề để DBA và AI agent có thể tìm kiếm nhanh
+56	SQL Server Operations Appendix	2	Đặc tả riêng cho SQL Server	Tổng hợp mapping policy chung sang SQL Server, gồm Always On, SQL Agent, backup, restore, CHECKDB, index maintenance, Query Store và monitoring
+57	PostgreSQL Operations Appendix	2	Đặc tả riêng cho PostgreSQL	Tổng hợp mapping policy chung sang PostgreSQL, gồm WAL, PITR, replication slot, vacuum, autovacuum, pg stat views, amcheck và monitoring
+58	MySQL MariaDB Operations Appendix	2	Đặc tả riêng cho MySQL và MariaDB	Tổng hợp mapping policy chung sang MySQL hoặc MariaDB, gồm binlog, GTID, replication, backup, restore, slow query log và engine specific checks
+59	Oracle Operations Appendix	2	Đặc tả riêng cho Oracle	Tổng hợp mapping policy chung sang Oracle, gồm RMAN, archive log, Data Guard, tablespace, AWR, ASH, listener và monitoring
+60	Azure SQL Operations Appendix	2	Đặc tả riêng cho Azure SQL	Tổng hợp mapping policy chung sang Azure SQL Database và Managed Instance, gồm backup built in, PITR, long term retention, Query Store, elastic pool, SQL Agent alternative và Azure Monitor
+61	Z DB Operations Appendix	2	Đặc tả riêng cho Z DB	Tổng hợp mapping policy chung sang Z DB, gồm đặc điểm vận hành, backup, restore, HA, monitoring, phân quyền, escalation và ràng buộc riêng của nền tảng

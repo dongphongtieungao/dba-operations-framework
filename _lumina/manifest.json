@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 4,
+  "packageVersion": "1.5.1",
+  "locale": "vi",
+  "installedAt": "2026-05-15T01:55:44.031Z",
+  "updatedAt": "2026-05-15T01:55:44.031Z",
+  "packs": {
+    "core": {
+      "version": "1.5.1",
+      "source": "built-in"
+    },
+    "research": {
+      "version": "1.5.1",
+      "source": "built-in"
+    }
+  },
+  "ideTargets": [
+    "codex"
+  ],
+  "symlinkStrategies": {},
+  "resolvedPaths": {
+    "projectRoot": "C:\\Sk\\Dba\\lumina-wiki-main\\azure-dba-kms",
+    "wiki": "C:\\Sk\\Dba\\lumina-wiki-main\\azure-dba-kms\\wiki",
+    "raw": "C:\\Sk\\Dba\\lumina-wiki-main\\azure-dba-kms\\raw",
+    "agents": "C:\\Sk\\Dba\\lumina-wiki-main\\azure-dba-kms\\.agents",
+    "lumina": "C:\\Sk\\Dba\\lumina-wiki-main\\azure-dba-kms\\_lumina"
+  }
+}

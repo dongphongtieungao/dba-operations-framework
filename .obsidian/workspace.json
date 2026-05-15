@@ -1,0 +1,218 @@
+{
+  "main": {
+    "id": "ee0d92bc0d4c1f37",
+    "type": "split",
+    "children": [
+      {
+        "id": "605a6af6fc45d8aa",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "853fd1ed2360af1a",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "Untitled.canvas",
+                "viewState": {
+                  "x": 0,
+                  "y": 0,
+                  "zoom": 0
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "Untitled"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "eaade3a108e5d113",
+    "type": "split",
+    "children": [
+      {
+        "id": "0628268e323d9dde",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4743fb47d4e41e9c",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "4c3a567ac45c770c",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "c23daaeefbe0077e",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "7f6456b3d7446028",
+    "type": "split",
+    "children": [
+      {
+        "id": "1f3e75e3b0dea616",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6b4acc60fc50a815",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Untitled.canvas",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Untitled"
+            }
+          },
+          {
+            "id": "ddbbbfdee40d379a",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Untitled.canvas",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Untitled"
+            }
+          },
+          {
+            "id": "e53717edbca4b94f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "af1d965ff75a0da1",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "a8b1a2fa5382cbb7",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Untitled.canvas",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Untitled"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "853fd1ed2360af1a",
+  "lastOpenFiles": [
+    "Untitled.canvas",
+    "wiki/concepts/sql-server-vlf-management.md",
+    "wiki/concepts/sql-server-storage-and-tempdb-operations.md",
+    "wiki/concepts/sql-server-agent-job-operations.md",
+    "wiki/concepts/sql-server-security-auditing.md",
+    "wiki/concepts/sql-server-backup-restore-operations.md",
+    "wiki/concepts/sql-server-index-and-statistics-maintenance.md",
+    "wiki/concepts/sql-server-extended-events-monitoring.md",
+    "wiki/concepts/sql-server-plan-cache-analysis.md",
+    "wiki/concepts/sql-server-query-store-analysis.md",
+    "wiki/concepts/sql-server-performance-diagnostics.md",
+    "wiki/concepts/sql-server-configuration-baseline.md",
+    "wiki/concepts/sql-server-dba-toolbox.md",
+    "wiki/sources/sql-server-dba-toolbox.md",
+    "raw/sources/Sql-Server-DBA-Toolbox-main/VLFs/Visualizing VLFs.sql",
+    "raw/sources/Sql-Server-DBA-Toolbox-main/VLFs/Reduce VLF count.sql",
+    "raw/sources/Sql-Server-DBA-Toolbox-main/VLFs/Detect too many VLFs.sql",
+    "raw/sources/Sql-Server-DBA-Toolbox-main/TempDB/Who owns that #temp table.sql",
+    "raw/sources/Sql-Server-DBA-Toolbox-main/TempDB/Find tempdbs with uneven initial size or growth.sql",
+    "raw/sources/Sql-Server-DBA-Toolbox-main/TempDB/Find tempdb data files with differing sizes.sql",
+    "raw/sources/Sql-Server-DBA-Toolbox-main/Statistics/Generate DROP STATISTICS statements for all user-created statistics.sql",
+    "raw/sources/Sql-Server-DBA-Toolbox-main/Statistics/Find auto-created statistics objects that overlap with index statistics.sql",
+    "raw/sources/Sql-Server-DBA-Toolbox-main/Statistics/Drop all statistics.sql",
+    "raw/sources/Sql-Server-DBA-Toolbox-main/Security/Who are the sysadmins in this Instance.sql",
+    "raw/sources/Sql-Server-DBA-Toolbox-main/README.md",
+    "raw/sources/Sql-Server-DBA-Toolbox-main/CODE_OF_CONDUCT.md"
+  ]
+}

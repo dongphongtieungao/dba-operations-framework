@@ -1,0 +1,6 @@
+{"from":"sources/sql-server-2022-administration-inside-out","type":"cites","to":"sources/azure-sql-documentation"}
+{"from":"sources/sql-server-2022-administration-inside-out","type":"cites","to":"sources/azure-database-migration-service-documentation"}
+{"from":"sources/dba-operations-framework","type":"cites","to":"sources/master-dba-runbook-backend-java-azure-sql"}
+{"from":"sources/dba-operations-framework","type":"cites","to":"sources/sql-server-dba-toolbox"}
+{"from":"sources/dba-operations-framework","type":"cites","to":"sources/sql-server-2022-administration-inside-out"}
+{"from":"sources/dba-operations-framework","type":"cites","to":"sources/azure-sql-documentation"}
