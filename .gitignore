@@ -3,3 +3,4 @@ _lumina/_state/
 raw/tmp/
 .env
 node_modules/
+.pdf
