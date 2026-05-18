@@ -2,14 +2,28 @@
 
 ## Thông tin tài liệu
 
-1. Mã tài liệu: DBA POL 003
-2. Loại tài liệu: Policy
-3. Mức ưu tiên triển khai: 3
-4. Owner đề xuất: DBA Team
-5. Trạng thái: Draft
-6. Phiên bản: 0.1
-7. Phạm vi áp dụng: SQL Server, Azure SQL, PostgreSQL, MySQL, MariaDB, Oracle, Z DB và các nền tảng database trong môi trường hybrid
-8. Chu kỳ review: 6 tháng hoặc sau sự cố nghiêm trọng, thay đổi kiến trúc, thay đổi quy định bảo mật
+| Trường | Giá trị |
+|--------|---------|
+| Mã tài liệu | DBA-POL-003 |
+| Loại tài liệu | Policy |
+| Mức ưu tiên triển khai | 3 |
+| Owner | DBA Team |
+| Reviewer | DBA Lead, Security Lead |
+| Approver | Service Owner |
+| Trạng thái | Draft |
+| Phiên bản | 0.2 |
+| Ngày tạo | 2026-05-18 |
+| Ngày review gần nhất | 2026-05-18 |
+| Ngày review tiếp theo | 2026-11-18 |
+| Phạm vi áp dụng | SQL Server, Azure SQL, PostgreSQL, MySQL, MariaDB, Oracle, Z DB |
+| Chu kỳ review | 6 tháng hoặc sau sự cố nghiêm trọng |
+
+### Lịch sử thay đổi
+
+| Phiên bản | Ngày | Người thay đổi | Mô tả |
+|-----------|------|----------------|-------|
+| 0.1 | 2026-05-18 | DBA Team | Bản draft đầu tiên |
+| 0.2 | 2026-05-18 | DBA Team | Bổ sung JIT access, SoD, inactive account, metadata |
 
 ## 1. Mục đích
 
@@ -32,36 +46,51 @@ Chính sách này quy định nguyên tắc tạo, cấp, sửa, thu hồi và r
 
 ### 4.1. Human user
 
-Tài khoản đại diện cho cá nhân. Tài khoản này dùng cho truy cập có kiểm soát, hỗ trợ điều tra và thao tác được phê duyệt.
+Tài khoản đại diện cho cá nhân. Dùng cho truy cập có kiểm soát, hỗ trợ điều tra và thao tác được phê duyệt.
 
 ### 4.2. Service account
 
-Tài khoản ứng dụng hoặc automation sử dụng. Tài khoản này phải có owner, secret management và phạm vi quyền rõ ràng.
+Tài khoản ứng dụng hoặc automation sử dụng. Phải có owner, secret management và phạm vi quyền rõ ràng.
 
 ### 4.3. Privileged account
 
-Tài khoản có quyền quản trị cao. Tài khoản này phải được kiểm soát chặt, audit đầy đủ và review thường xuyên.
+Tài khoản có quyền quản trị cao. Phải được kiểm soát chặt, audit đầy đủ và review thường xuyên.
 
 ### 4.4. Break glass account
 
-Tài khoản dùng trong trường hợp khẩn cấp khi các kênh truy cập thông thường không hoạt động. Mọi lần sử dụng phải được post review.
+Tài khoản dùng trong trường hợp khẩn cấp. Mọi lần sử dụng phải được post review.
 
-## 5. Quy định cấp quyền
+## 5. Just-In-Time access
+
+1. Quyền production cao nên được cấp theo mô hình Just-In-Time (JIT) nếu có công cụ hỗ trợ.
+2. JIT access chỉ kích hoạt khi cần, tự động thu hồi sau thời gian định trước.
+3. Mỗi JIT request phải có ticket, lý do và thời hạn.
+4. JIT phải có audit đầy đủ: thời gian kích hoạt, thời gian thu hồi, thao tác trong phiên.
+5. Nếu chưa có công cụ JIT, phải dùng quy trình quyền tạm thời với DBA thu hồi thủ công.
+
+## 6. Separation of Duties
+
+1. Người review change không nên là người deploy change trên production với change rủi ro cao.
+2. Người approve quyền không nên là người thực hiện cấp quyền với quyền nhạy cảm.
+3. DBA không nên tự approve quyền cho chính mình trên production.
+4. Nếu team nhỏ không đủ người để tách hoàn toàn, phải có compensating control như audit log review bởi DBA Lead.
+
+## 7. Quy định cấp quyền
 
 1. Request phải nêu rõ user, database, môi trường, quyền cần cấp, lý do và thời hạn.
-2. Quyền production phải được service owner hoặc security phê duyệt theo mức độ nhạy cảm.
+2. Quyền production phải được service owner hoặc security phê duyệt.
 3. DBA chỉ cấp quyền sau khi ticket đầy đủ.
 4. DBA phải kiểm tra quyền sau khi cấp.
-5. DBA phải lưu evidence gồm approval, lệnh hoặc công cụ đã dùng và kết quả kiểm tra.
+5. DBA phải lưu evidence gồm approval, lệnh đã dùng và kết quả kiểm tra.
 
-## 6. Quy định quyền tạm thời
+## 8. Quy định quyền tạm thời
 
 1. Quyền tạm thời phải có ngày hết hạn.
 2. Quyền tạm thời phải được thu hồi tự động nếu có công cụ hỗ trợ.
 3. Nếu chưa tự động hóa, DBA phải có lịch review và thu hồi.
 4. Quyền tạm thời quá hạn phải được báo cáo.
 
-## 7. Quy định thu hồi quyền
+## 9. Quy định thu hồi quyền
 
 Quyền phải được thu hồi khi:
 
@@ -73,16 +102,23 @@ Quyền phải được thu hồi khi:
 6. Quyền tạm thời hết hạn.
 7. Security yêu cầu thu hồi.
 
-## 8. Access review
+## 10. Inactive account
 
-### 8.1. Tần suất
+1. Tài khoản không login trong 90 ngày phải được flag để review.
+2. Tài khoản không login trong 180 ngày phải được disable trừ khi có phê duyệt ngoại lệ.
+3. Service account không có traffic trong 90 ngày phải được xác nhận với owner.
+4. DBA nên chạy báo cáo inactive account định kỳ hằng tháng.
+
+## 11. Access review
+
+### 11.1. Tần suất
 
 1. Production: tối thiểu hằng quý.
 2. Non production có dữ liệu nhạy cảm: tối thiểu hằng quý.
 3. Non production thông thường: tối thiểu 6 tháng một lần.
-4. Privileged account: tối thiểu hằng tháng hoặc theo chính sách bảo mật của tổ chức.
+4. Privileged account: tối thiểu hằng tháng.
 
-### 8.2. Nội dung review
+### 11.2. Nội dung review
 
 1. Danh sách user.
 2. Danh sách role.
@@ -93,15 +129,15 @@ Quyền phải được thu hồi khi:
 7. Quyền tạm thời quá hạn.
 8. Quyền không còn owner.
 
-## 9. Quy định với production
+## 12. Quy định với production
 
 1. Không cấp quyền write production cho mục đích truy vấn thông thường.
 2. Không cấp quyền admin production cho developer trừ khi có phê duyệt đặc biệt và thời hạn.
-3. Truy vấn dữ liệu production phục vụ phân tích phải qua read only role nếu được phê duyệt.
-4. Export dữ liệu production phải tuân thủ Data Lifecycle Management Policy và Database Security Policy.
+3. Truy vấn dữ liệu production phục vụ phân tích phải qua read only role.
+4. Export dữ liệu production phải tuân thủ DBA-POL-001 và DBA-POL-002.
 5. Mọi thay đổi quyền production phải được audit.
 
-## 10. Evidence bắt buộc
+## 13. Evidence bắt buộc
 
 1. Ticket ID.
 2. Người yêu cầu.
@@ -113,18 +149,11 @@ Quyền phải được thu hồi khi:
 8. Lệnh hoặc công cụ thực hiện.
 9. Kết quả kiểm tra sau thực hiện.
 
-## 11. Ngoại lệ
+## 14. Ngoại lệ
 
-Ngoại lệ phải có:
+Ngoại lệ phải có lý do nghiệp vụ, đánh giá rủi ro, thời hạn, approval của service owner, approval của security nếu liên quan production, và kế hoạch đưa về trạng thái chuẩn.
 
-1. Lý do nghiệp vụ.
-2. Đánh giá rủi ro.
-3. Thời hạn.
-4. Approval của service owner.
-5. Approval của security nếu liên quan production hoặc dữ liệu nhạy cảm.
-6. Kế hoạch thu hồi hoặc đưa về trạng thái chuẩn.
-
-## 12. Chỉ số tuân thủ
+## 15. Chỉ số tuân thủ
 
 1. Số quyền production được cấp mới.
 2. Số quyền tạm thời quá hạn.
@@ -133,3 +162,12 @@ Ngoại lệ phải có:
 5. Số tài khoản không có owner.
 6. Số tài khoản không sử dụng nhưng chưa thu hồi.
 7. Số ngoại lệ access control còn hiệu lực.
+8. Số inactive account chưa xử lý.
+
+## 16. Liên kết tài liệu liên quan
+
+| Mã tài liệu | Tên tài liệu | Mối liên hệ |
+|-------------|---------------|-------------|
+| DBA-POL-002 | Database Security Policy | Nguyên tắc bảo mật tổng thể |
+| DBA-POL-006 | Database Audit and Compliance Policy | Audit access event |
+| DBA-OM-003 | DBA RACI Matrix | Trách nhiệm cấp quyền |

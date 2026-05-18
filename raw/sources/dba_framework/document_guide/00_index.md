@@ -6,33 +6,37 @@ Bộ tài liệu này là phiên bản lõi cho DBA Operations Framework, dùng 
 
 ## Danh mục tài liệu
 
-1. DBA Operations Framework Overview
-2. DBA Service Catalog
-3. DBA Operating Model
-4. DBA RACI Matrix
-5. DBA Document Governance Standard
-6. Data Lifecycle Management Policy
-7. Database Security Policy
-8. Database Access Control Policy
-9. Database Change Management Policy
-10. Backup and Restore Policy
-11. Database Audit and Compliance Policy
-12. Database HA and DR Policy
+| # | Mã tài liệu | Tên tài liệu | Loại | Phiên bản |
+|---|-------------|---------------|------|-----------|
+| 1 | DBA-OF-001 | DBA Operations Framework Overview | Framework | 0.2 |
+| 2 | DBA-OM-001 | DBA Service Catalog | Operating Model | 0.2 |
+| 3 | DBA-OM-002 | DBA Operating Model | Operating Model | 0.2 |
+| 4 | DBA-OM-003 | DBA RACI Matrix | Operating Model | 0.2 |
+| 5 | DBA-DG-001 | DBA Document Governance Standard | Standard | 0.2 |
+| 6 | DBA-POL-001 | Data Lifecycle Management Policy | Policy | 0.2 |
+| 7 | DBA-POL-002 | Database Security Policy | Policy | 0.2 |
+| 8 | DBA-POL-003 | Database Access Control Policy | Policy | 0.2 |
+| 9 | DBA-POL-004 | Database Change Management Policy | Policy | 0.2 |
+| 10 | DBA-POL-005 | Backup and Restore Policy | Policy | 0.2 |
+| 11 | DBA-POL-006 | Database Audit and Compliance Policy | Policy | 0.2 |
+| 12 | DBA-POL-007 | Database HA and DR Policy | Policy | 0.2 |
 
 ## Gợi ý thứ tự triển khai
 
-1. Backup and Restore Policy
-2. Database HA and DR Policy
-3. Database Security Policy
-4. Database Change Management Policy
-5. Database Access Control Policy
-6. DBA Service Catalog
-7. DBA Operating Model
-8. DBA RACI Matrix
-9. DBA Document Governance Standard
-10. Data Lifecycle Management Policy
-11. Database Audit and Compliance Policy
-12. DBA Operations Framework Overview
+| Ưu tiên | Tài liệu | Lý do |
+|---------|----------|-------|
+| 1 | DBA-POL-005 Backup and Restore Policy | Nền tảng bảo vệ dữ liệu |
+| 2 | DBA-POL-007 Database HA and DR Policy | Nền tảng sẵn sàng và khôi phục |
+| 3 | DBA-POL-002 Database Security Policy | Bảo mật cơ bản |
+| 4 | DBA-POL-004 Database Change Management Policy | Kiểm soát thay đổi |
+| 5 | DBA-POL-003 Database Access Control Policy | Kiểm soát truy cập |
+| 6 | DBA-OM-001 DBA Service Catalog | Chuẩn hóa dịch vụ |
+| 7 | DBA-OM-002 DBA Operating Model | Mô hình vận hành |
+| 8 | DBA-OM-003 DBA RACI Matrix | Trách nhiệm |
+| 9 | DBA-DG-001 DBA Document Governance Standard | Quản trị tài liệu |
+| 10 | DBA-POL-001 Data Lifecycle Management Policy | Vòng đời dữ liệu |
+| 11 | DBA-POL-006 Database Audit and Compliance Policy | Kiểm toán |
+| 12 | DBA-OF-001 DBA Operations Framework Overview | Tổng quan (review cuối) |
 
 ## Gợi ý sử dụng trong KMS
 
@@ -40,3 +44,4 @@ Bộ tài liệu này là phiên bản lõi cho DBA Operations Framework, dùng 
 2. Dùng file này làm index chính.
 3. Mỗi SOP hoặc runbook sau này phải liên kết ngược về policy và service catalog.
 4. Mỗi ticket production nên tham chiếu service ID, SOP ID, runbook ID và evidence template.
+5. Sử dụng YAML frontmatter theo chuẩn DBA-DG-001 để hỗ trợ agent tìm kiếm.

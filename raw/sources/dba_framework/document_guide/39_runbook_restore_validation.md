@@ -1,25 +1,24 @@
-  ---
-  doc_id: RBK-039
-  title: "Runbook Restore Validation"
-  doc_type: runbook
-  priority: 1
-  status: draft
-  owner: DBA Team
-  reviewer: DBA Lead
-  approver: Service Owner
-  version: 0.1
-  created_date: 2026-05-15
-  last_updated: 2026-05-15
-  related_documents:
-    - POL-010 Backup and Restore Policy
-- SOP-024 Restore Operation
-- SOP-029 Disaster Recovery Drill
-- TPL-048 Operation Evidence
-- TPL-049 Restore Drill Report
-- MET-052 DBA KPI and Metrics Catalog
-  ---
+---
+doc_id: DBA-RBK-039
+title: "Runbook Restore Validation"
+doc_type: runbook
+priority: 1
+status: draft
+owner: DBA Team
+reviewer: DBA Lead
+approver: Service Owner
+version: 0.2
+created_date: 2026-05-15
+last_updated: 2026-05-18
+related_documents:
+  - DBA-POL-005 Backup and Restore Policy
+  - DBA-SOP-024 SOP Restore Operation
+  - DBA-SOP-029 SOP Disaster Recovery Drill
+  - DBA-TMP-048 Template Operation Evidence
+  - DBA-TMP-049 Template Restore Drill Report
+---
 
-  # RBK-039 - Runbook Restore Validation
+# DBA-RBK-039 - Runbook Restore Validation
 
   ## 1. Mục đích
 

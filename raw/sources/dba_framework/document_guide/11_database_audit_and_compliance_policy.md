@@ -2,14 +2,28 @@
 
 ## Thông tin tài liệu
 
-1. Mã tài liệu: DBA POL 006
-2. Loại tài liệu: Policy
-3. Mức ưu tiên triển khai: 2
-4. Owner đề xuất: DBA Team
-5. Trạng thái: Draft
-6. Phiên bản: 0.1
-7. Phạm vi áp dụng: SQL Server, Azure SQL, PostgreSQL, MySQL, MariaDB, Oracle, Z DB và các nền tảng database trong môi trường hybrid
-8. Chu kỳ review: 6 tháng hoặc sau sự cố nghiêm trọng, thay đổi kiến trúc, thay đổi quy định bảo mật
+| Trường | Giá trị |
+|--------|---------|
+| Mã tài liệu | DBA-POL-006 |
+| Loại tài liệu | Policy |
+| Mức ưu tiên triển khai | 2 |
+| Owner | DBA Team |
+| Reviewer | DBA Lead, Security Lead |
+| Approver | Service Owner, Security Lead |
+| Trạng thái | Draft |
+| Phiên bản | 0.2 |
+| Ngày tạo | 2026-05-18 |
+| Ngày review gần nhất | 2026-05-18 |
+| Ngày review tiếp theo | 2026-11-18 |
+| Phạm vi áp dụng | SQL Server, Azure SQL, PostgreSQL, MySQL, MariaDB, Oracle, Z DB |
+| Chu kỳ review | 6 tháng hoặc sau sự cố nghiêm trọng |
+
+### Lịch sử thay đổi
+
+| Phiên bản | Ngày | Người thay đổi | Mô tả |
+|-----------|------|----------------|-------|
+| 0.1 | 2026-05-18 | DBA Team | Bản draft đầu tiên |
+| 0.2 | 2026-05-18 | DBA Team | Bổ sung audit log format, SIEM integration, DBA audit, metadata |
 
 ## 1. Mục đích
 
@@ -28,16 +42,31 @@ Chính sách này quy định nội dung cần audit, cách lưu trữ audit log
 5. Audit log không được chứa thông tin nhạy cảm quá mức cần thiết.
 6. Evidence cho audit phải liên kết được với ticket hoặc change record.
 
-## 4. Sự kiện bắt buộc audit
+## 4. Audit log format chuẩn
 
-### 4.1. Access event
+Mỗi audit log entry phải chứa tối thiểu:
+
+| Trường | Mô tả | Bắt buộc |
+|--------|-------|----------|
+| Timestamp | Thời gian sự kiện, UTC hoặc timezone nhất quán | Bắt buộc |
+| User | Tài khoản thực hiện | Bắt buộc |
+| Source IP | Địa chỉ IP nguồn nếu DBMS hỗ trợ | Khuyến nghị |
+| Action | Loại hành động (login, grant, DDL, DML) | Bắt buộc |
+| Object | Đối tượng bị tác động (table, role, database) | Bắt buộc |
+| Result | Thành công hoặc thất bại | Bắt buộc |
+| Database | Database liên quan | Bắt buộc |
+| Detail | Chi tiết bổ sung (SQL statement, error) | Khuyến nghị |
+
+## 5. Sự kiện bắt buộc audit
+
+### 5.1. Access event
 
 1. Login thành công vào production nếu DBMS hỗ trợ và policy yêu cầu.
 2. Failed login bất thường.
 3. Truy cập bằng privileged account.
-4. Truy cập dữ liệu nhạy cảm nếu DBMS hoặc platform hỗ trợ.
+4. Truy cập dữ liệu nhạy cảm nếu DBMS hỗ trợ.
 
-### 4.2. Permission event
+### 5.2. Permission event
 
 1. Tạo user.
 2. Xóa user.
@@ -47,14 +76,14 @@ Chính sách này quy định nội dung cần audit, cách lưu trữ audit log
 6. Thay đổi owner.
 7. Thay đổi privileged account.
 
-### 4.3. Schema event
+### 5.3. Schema event
 
 1. Create, alter, drop table.
 2. Create, alter, drop index.
 3. Create, alter, drop procedure, function, trigger hoặc package.
 4. Thay đổi schema ảnh hưởng production.
 
-### 4.4. Data operation event
+### 5.4. Data operation event
 
 1. Bulk update hoặc bulk delete production nếu có rủi ro.
 2. Data correction.
@@ -62,7 +91,7 @@ Chính sách này quy định nội dung cần audit, cách lưu trữ audit log
 4. Export dữ liệu nhạy cảm.
 5. Purge hoặc archive dữ liệu.
 
-### 4.5. Backup restore event
+### 5.5. Backup restore event
 
 1. Backup ad hoc.
 2. Backup failure.
@@ -71,7 +100,7 @@ Chính sách này quy định nội dung cần audit, cách lưu trữ audit log
 5. Xóa backup trước retention.
 6. Thay đổi backup policy.
 
-### 4.6. HA DR event
+### 5.6. HA DR event
 
 1. Failover.
 2. Switchover.
@@ -80,15 +109,29 @@ Chính sách này quy định nội dung cần audit, cách lưu trữ audit log
 5. DR drill.
 6. Thay đổi endpoint hoặc connection string liên quan database.
 
-## 5. Retention audit log
+## 6. Audit cho DBA activity
+
+1. DBA activity trên production cũng phải được audit.
+2. DBA Lead hoặc Security phải review DBA activity log định kỳ.
+3. Thao tác DBA ngoài SOP hoặc ticket phải được flag và giải trình.
+4. Mục đích không phải giám sát DBA mà là đảm bảo truy vết khi có sự cố.
+
+## 7. SIEM integration
+
+1. Audit log quan trọng nên được forward tới SIEM hoặc log platform tập trung nếu có.
+2. Ví dụ: Splunk, ELK Stack, Azure Monitor, Azure Sentinel.
+3. Forward giúp bảo vệ log khỏi bị xóa tại database server.
+4. SIEM alert nên được cấu hình cho failed login bất thường, privileged access ngoài giờ và DDL production ngoài maintenance window.
+
+## 8. Retention audit log
 
 1. Retention phải phù hợp yêu cầu pháp lý, bảo mật và audit nội bộ.
 2. Audit log production phải lưu tối thiểu theo yêu cầu tổ chức.
-3. Audit log liên quan P1, P2 hoặc dữ liệu nhạy cảm phải được bảo quản cho đến khi kết thúc review hoặc audit.
+3. Audit log liên quan P1, P2 hoặc dữ liệu nhạy cảm phải được bảo quản cho đến khi kết thúc review.
 4. Audit log hết retention phải được xóa theo quy trình.
 5. Không xóa audit log đang liên quan sự cố, tranh chấp hoặc kiểm toán.
 
-## 6. Bảo vệ audit log
+## 9. Bảo vệ audit log
 
 1. Audit log phải lưu ở vị trí có kiểm soát quyền.
 2. Người có quyền thao tác database không nên có quyền xóa audit log nếu hệ thống cho phép tách quyền.
@@ -96,9 +139,9 @@ Chính sách này quy định nội dung cần audit, cách lưu trữ audit log
 4. Log phải có timestamp nhất quán.
 5. Thời gian hệ thống phải được đồng bộ.
 
-## 7. Compliance review
+## 10. Compliance review
 
-### 7.1. Review định kỳ
+### 10.1. Review định kỳ
 
 1. Review privileged account.
 2. Review quyền production.
@@ -107,7 +150,7 @@ Chính sách này quy định nội dung cần audit, cách lưu trữ audit log
 5. Review change record.
 6. Review exception còn hiệu lực.
 
-### 7.2. Review sau sự cố
+### 10.2. Review sau sự cố
 
 1. Thu thập audit log liên quan.
 2. Xác định timeline.
@@ -115,7 +158,7 @@ Chính sách này quy định nội dung cần audit, cách lưu trữ audit log
 4. Kiểm tra thao tác ngoài quy trình nếu có.
 5. Đưa kết quả vào PIR.
 
-## 8. Evidence phục vụ audit
+## 11. Evidence phục vụ audit
 
 Evidence tối thiểu gồm:
 
@@ -124,24 +167,17 @@ Evidence tối thiểu gồm:
 3. Người phê duyệt.
 4. Người thực hiện.
 5. Thời gian.
-6. Hệ thống ảnh hưởng.
-7. Database ảnh hưởng.
-8. Lệnh, script, pipeline hoặc công cụ đã sử dụng.
-9. Output.
-10. Kết quả kiểm tra sau thực hiện.
-11. Link tới log nếu có.
+6. Hệ thống và database ảnh hưởng.
+7. Lệnh, script, pipeline hoặc công cụ đã sử dụng.
+8. Output.
+9. Kết quả kiểm tra sau thực hiện.
+10. Link tới log nếu có.
 
-## 9. Ngoại lệ
+## 12. Ngoại lệ
 
-Ngoại lệ audit chỉ được chấp nhận khi:
+Ngoại lệ audit chỉ được chấp nhận khi DBMS không hỗ trợ, audit gây ảnh hưởng nghiêm trọng đã được chứng minh, có biện pháp thay thế, có phê duyệt của security, và có thời hạn.
 
-1. DBMS hoặc platform không hỗ trợ audit yêu cầu.
-2. Việc bật audit gây ảnh hưởng nghiêm trọng đã được chứng minh.
-3. Có biện pháp thay thế.
-4. Có phê duyệt của security và service owner.
-5. Có thời hạn và kế hoạch xử lý.
-
-## 10. Chỉ số tuân thủ
+## 13. Chỉ số tuân thủ
 
 1. Tỷ lệ database production có audit baseline.
 2. Tỷ lệ privileged activity có audit.
@@ -150,3 +186,12 @@ Ngoại lệ audit chỉ được chấp nhận khi:
 5. Số sự kiện failed login bất thường chưa xử lý.
 6. Số lần xóa hoặc thiếu audit log không hợp lệ.
 7. Tỷ lệ compliance review hoàn thành đúng hạn.
+
+## 14. Liên kết tài liệu liên quan
+
+| Mã tài liệu | Tên tài liệu | Mối liên hệ |
+|-------------|---------------|-------------|
+| DBA-POL-002 | Database Security Policy | Audit log requirements |
+| DBA-POL-003 | Database Access Control Policy | Access review |
+| DBA-POL-004 | Database Change Management Policy | Change audit |
+| DBA-POL-005 | Backup and Restore Policy | Backup restore audit |

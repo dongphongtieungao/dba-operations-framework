@@ -1,20 +1,26 @@
 ---
-doc_id: MAT-053
+doc_id: DBA-AUT-053
 title: "DBA Automation Candidate Matrix"
 doc_type: management
-implementation_order: 2
+priority: 2
 status: draft
 owner: DBA Team
 reviewer: DBA Lead
 approver: Service Owner
-version: 0.1
+version: 0.2
 created_date: 2026-05-15
-last_updated: 2026-05-15
+last_updated: 2026-05-18
 language: vi
 framework: DBA Operations Framework
+related_documents:
+  - DBA-RBK-038 Runbook Backup Verification
+  - DBA-RBK-039 Runbook Restore Validation
+  - DBA-RBK-041 Runbook Failover Execution
+  - DBA-RBK-043 Runbook Capacity Report
+  - DBA-MET-052 DBA KPI and Metrics Catalog
 ---
 
-# MAT-053 - DBA Automation Candidate Matrix
+# DBA-AUT-053 - DBA Automation Candidate Matrix
 
 ## 1. Mục đích
 

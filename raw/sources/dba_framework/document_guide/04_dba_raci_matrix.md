@@ -2,14 +2,28 @@
 
 ## Thông tin tài liệu
 
-1. Mã tài liệu: DBA OM 003
-2. Loại tài liệu: Operating Model
-3. Mức ưu tiên triển khai: 3
-4. Owner đề xuất: DBA Team
-5. Trạng thái: Draft
-6. Phiên bản: 0.1
-7. Phạm vi áp dụng: SQL Server, Azure SQL, PostgreSQL, MySQL, MariaDB, Oracle, Z DB và các nền tảng database trong môi trường hybrid
-8. Chu kỳ review: 6 tháng hoặc sau sự cố nghiêm trọng, thay đổi kiến trúc, thay đổi quy định bảo mật
+| Trường | Giá trị |
+|--------|---------|
+| Mã tài liệu | DBA-OM-003 |
+| Loại tài liệu | Operating Model |
+| Mức ưu tiên triển khai | 3 |
+| Owner | DBA Team |
+| Reviewer | DBA Lead, Infra Lead, Security Lead |
+| Approver | Service Owner |
+| Trạng thái | Draft |
+| Phiên bản | 0.2 |
+| Ngày tạo | 2026-05-18 |
+| Ngày review gần nhất | 2026-05-18 |
+| Ngày review tiếp theo | 2026-11-18 |
+| Phạm vi áp dụng | SQL Server, Azure SQL, PostgreSQL, MySQL, MariaDB, Oracle, Z DB và các nền tảng database trong môi trường hybrid |
+| Chu kỳ review | 6 tháng hoặc sau sự cố nghiêm trọng, thay đổi kiến trúc, thay đổi quy định bảo mật |
+
+### Lịch sử thay đổi
+
+| Phiên bản | Ngày | Người thay đổi | Mô tả |
+|-----------|------|----------------|-------|
+| 0.1 | 2026-05-18 | DBA Team | Bản draft đầu tiên |
+| 0.2 | 2026-05-18 | DBA Team | Chuyển sang format bảng matrix, bổ sung activity, chuẩn hóa metadata |
 
 ## 1. Mục đích
 
@@ -17,176 +31,129 @@ Tài liệu này làm rõ trách nhiệm giữa DBA team và các bên liên qua
 
 ## 2. Quy ước RACI
 
-1. R là Responsible, người thực hiện chính.
-2. A là Accountable, người chịu trách nhiệm cuối cùng.
-3. C là Consulted, bên cần tham vấn trước hoặc trong khi thực hiện.
-4. I là Informed, bên cần được thông báo.
+| Ký hiệu | Vai trò | Mô tả |
+|----------|---------|-------|
+| R | Responsible | Người thực hiện chính |
+| A | Accountable | Người chịu trách nhiệm cuối cùng, phê duyệt kết quả |
+| C | Consulted | Bên cần tham vấn trước hoặc trong khi thực hiện |
+| I | Informed | Bên cần được thông báo sau khi hoàn thành |
 
 ## 3. Vai trò sử dụng trong ma trận
 
-1. DBA: Database Administrator hoặc DBA team.
-2. DBA Lead: Người phụ trách kỹ thuật DBA.
-3. App Team: Đội phát triển hoặc vận hành ứng dụng.
-4. Infra Team: Đội hạ tầng, hệ điều hành, storage, network, cloud.
-5. Security Team: Đội bảo mật và tuân thủ.
-6. Service Owner: Chủ sở hữu dịch vụ nghiệp vụ hoặc hệ thống.
-7. CAB: Change Advisory Board.
-8. Service Desk: Đội tiếp nhận và điều phối ticket.
-9. Vendor hoặc Platform Team: Nhà cung cấp hoặc đội nền tảng như Z DB, cloud managed database.
+| Viết tắt | Vai trò | Mô tả |
+|----------|---------|-------|
+| DBA | Database Administrator | Người thực hiện tác vụ database |
+| DBA-L | DBA Lead | Người phụ trách kỹ thuật DBA |
+| APP | Application Team | Đội phát triển hoặc vận hành ứng dụng |
+| INFRA | Infrastructure Team | Đội hạ tầng, OS, storage, network, cloud |
+| SEC | Security Team | Đội bảo mật và tuân thủ |
+| SO | Service Owner | Chủ sở hữu dịch vụ nghiệp vụ |
+| CAB | Change Advisory Board | Hội đồng tư vấn thay đổi |
+| SD | Service Desk | Đội tiếp nhận và điều phối ticket |
+| VND | Vendor / Platform Team | Nhà cung cấp hoặc đội nền tảng |
 
-## 4. Ma trận RACI theo hoạt động
+## 4. Ma trận RACI chính
 
-### 4.1. Tạo database mới
+### 4.1. Provisioning và Access
 
-1. DBA: R
-2. DBA Lead: C
-3. App Team: C
-4. Infra Team: C
-5. Security Team: C nếu dữ liệu nhạy cảm
-6. Service Owner: A
-7. CAB: I nếu production hoặc change lớn
-8. Service Desk: I
+| Hoạt động | DBA | DBA-L | APP | INFRA | SEC | SO | CAB | SD |
+|-----------|-----|-------|-----|-------|-----|-----|-----|-----|
+| Tạo database mới | R | C | C | C | C¹ | A | I² | I |
+| Tạo schema | R | C | C | | | A | | I |
+| Tạo user hoặc role | R | C³ | C | | C³ | A | | I |
+| Cấp quyền database | R | C³ | C | | A⁴ | A | | I |
+| Thu hồi quyền | R | | C⁵ | | A | C | | I |
+| Setup monitoring cho DB mới | R | C | C | C | | A | | I |
 
-### 4.2. Cấp quyền database
+> ¹ Khi dữ liệu nhạy cảm (P2, P3). ² Khi production hoặc change lớn. ³ Khi quyền cao. ⁴ Khi quyền production hoặc dữ liệu nhạy cảm. ⁵ Khi là service account.
 
-1. DBA: R
-2. DBA Lead: C nếu quyền cao
-3. App Team: C
-4. Security Team: A nếu quyền production hoặc dữ liệu nhạy cảm
-5. Service Owner: A với quyền nghiệp vụ
-6. Service Desk: I
+### 4.2. Backup và Restore
 
-### 4.3. Thu hồi quyền
+| Hoạt động | DBA | DBA-L | APP | INFRA | SEC | SO | CAB | SD |
+|-----------|-----|-------|-----|-------|-----|-----|-----|-----|
+| Backup định kỳ | R | A | | C¹ | C² | I | | |
+| Backup ad hoc | R | A | C | C¹ | | I | | I |
+| Restore dữ liệu | R | A³ | C | C¹ | C⁴ | A³ | C⁵ | I |
+| Point in time recovery | R | A | C | | C⁴ | A | C⁶ | I |
+| Restore drill | R | A | C | C | | I | | I |
+| Xóa backup trước retention | R | A | | | C | A | | |
 
-1. DBA: R
-2. Security Team: A
-3. App Team: C nếu là service account
-4. Service Owner: C
-5. Service Desk: I
+> ¹ Khi liên quan storage hoặc backup platform. ² Khi liên quan encryption hoặc key. ³ Khi production hoặc restore rủi ro cao. ⁴ Khi dữ liệu nhạy cảm. ⁵ Khi restore có downtime hoặc rủi ro lớn. ⁶ Khi production.
 
-### 4.4. Backup định kỳ
+### 4.3. HA và DR
 
-1. DBA: R
-2. DBA Lead: A
-3. Infra Team: C nếu liên quan storage hoặc backup platform
-4. Security Team: C nếu liên quan encryption hoặc key
-5. Service Owner: I
+| Hoạt động | DBA | DBA-L | APP | INFRA | SEC | SO | CAB | VND |
+|-----------|-----|-------|-----|-------|-----|-----|-----|-----|
+| Failover khẩn cấp | R | A | C | C | I | A | I | C¹ |
+| Switchover có kế hoạch | R | A | C | C | | A | A | |
+| DR drill | R | A | C | C | C² | A | I | C¹ |
+| Bổ sung hoặc thay replica | R | A | C | C | | A | I | C¹ |
+| Kiểm tra replication lag | R | C | I | C | | I | | |
+| Rebuild replica | R | A | I | C | | I | | C¹ |
 
-### 4.5. Restore dữ liệu
+> ¹ Khi là managed platform. ² Khi có dữ liệu nhạy cảm hoặc thay đổi quyền.
 
-1. DBA: R
-2. DBA Lead: A nếu production hoặc restore rủi ro cao
-3. App Team: C và xác nhận dữ liệu
-4. Infra Team: C nếu cần storage hoặc server
-5. Security Team: C nếu dữ liệu nhạy cảm
-6. Service Owner: A với restore production
-7. CAB: C nếu restore có downtime hoặc rủi ro lớn
+### 4.4. Change và Release
 
-### 4.6. Point in time recovery
+| Hoạt động | DBA | DBA-L | APP | INFRA | SEC | SO | CAB | SD |
+|-----------|-----|-------|-----|-------|-----|-----|-----|-----|
+| Review schema change | R | C¹ | R | | C² | A | A³ | |
+| Triển khai schema change | R⁴ | C | R⁵ | | | A | A³ | I |
+| Data migration | R | A | R | C | C² | A | A³ | I |
+| Database upgrade hoặc patch | R | A | C | C | C | A | A | I |
+| Thay đổi database config | R | A | C | C | C | A | C³ | I |
 
-1. DBA: R
-2. DBA Lead: A
-3. App Team: C
-4. Service Owner: A với lựa chọn recovery point
-5. Security Team: C nếu có dữ liệu nhạy cảm
-6. CAB: C nếu production
+> ¹ Khi rủi ro cao. ² Khi dữ liệu nhạy cảm. ³ Khi production change. ⁴ Nếu DBA thực thi script. ⁵ Nếu deployment pipeline thuộc app team.
 
-### 4.7. Failover khẩn cấp
+### 4.5. Performance và Capacity
 
-1. DBA: R
-2. DBA Lead: A
-3. Infra Team: C
-4. App Team: C và xác nhận ứng dụng
-5. Service Owner: A với quyết định nghiệp vụ
-6. Security Team: I hoặc C nếu có rủi ro bảo mật
-7. CAB: I sau khi thực hiện
-8. Vendor hoặc Platform Team: C nếu là managed platform
+| Hoạt động | DBA | DBA-L | APP | INFRA | SEC | SO | CAB | SD |
+|-----------|-----|-------|-----|-------|-----|-----|-----|-----|
+| Điều tra query chậm | R | C¹ | R | C² | | I | | |
+| Xử lý blocking hoặc deadlock | R | A³ | C | | | C⁴ | I⁵ | |
+| Đề xuất index | R | C | C | | | I | | |
+| Capacity planning | R | A | C | C | | A | | |
+| Scale up hoặc scale out | R | A | C | R | | A | A | I |
 
-### 4.8. Switchover có kế hoạch
+> ¹ Khi ảnh hưởng production nghiêm trọng. ² Khi liên quan tài nguyên hệ thống. ³ Khi cần kill session production. ⁴ Khi có ảnh hưởng nghiệp vụ. ⁵ Khi phát sinh emergency change.
 
-1. DBA: R
-2. DBA Lead: A
-3. App Team: C
-4. Infra Team: C
-5. Service Owner: A
-6. CAB: A với change production
-7. Service Desk: I
+### 4.6. Incident và Compliance
 
-### 4.9. Review schema change
+| Hoạt động | DBA | DBA-L | APP | INFRA | SEC | SO | CAB | SD |
+|-----------|-----|-------|-----|-------|-----|-----|-----|-----|
+| RCA hoặc PIR sau sự cố | R | C | R¹ | R¹ | R² | A | | I |
+| Review quyền định kỳ | R | C | C³ | | A | A | | I |
+| Xuất audit log | R | C | | | A | I | | |
+| Decommission database | R | C | C | C | C⁴ | A | A⁵ | I |
+| Data masking cho non-prod | R | C | C | | A | A | | |
 
-1. App Team: R với nội dung thay đổi
-2. DBA: R với review database impact
-3. DBA Lead: C nếu rủi ro cao
-4. Service Owner: A với thay đổi nghiệp vụ
-5. CAB: A nếu production change
-6. Security Team: C nếu dữ liệu nhạy cảm
-
-### 4.10. Triển khai schema change
-
-1. DBA: R nếu DBA thực thi script
-2. App Team: R nếu deployment pipeline thuộc app team
-3. DBA Lead: C
-4. CAB: A với production change
-5. Service Owner: A với rủi ro nghiệp vụ
-6. Service Desk: I
-
-### 4.11. Điều tra query chậm
-
-1. DBA: R với phân tích database
-2. App Team: R với phân tích code và SQL nghiệp vụ
-3. DBA Lead: C nếu ảnh hưởng production nghiêm trọng
-4. Infra Team: C nếu liên quan tài nguyên hệ thống
-5. Service Owner: I
-
-### 4.12. Xử lý blocking hoặc deadlock
-
-1. DBA: R
-2. App Team: C
-3. DBA Lead: A nếu cần kill session production
-4. Service Owner: C nếu có ảnh hưởng nghiệp vụ
-5. CAB: I nếu phát sinh emergency change
-
-### 4.13. RCA hoặc PIR sau sự cố
-
-1. DBA: R với phần database
-2. App Team: R với phần application
-3. Infra Team: R với phần hạ tầng
-4. Security Team: R nếu có yếu tố bảo mật
-5. Service Owner: A
-6. DBA Lead: C
-7. Management: I với P1 hoặc P2
-
-### 4.14. Review quyền định kỳ
-
-1. DBA: R với dữ liệu quyền hiện tại
-2. Security Team: A
-3. App Team: C với service account
-4. Service Owner: A với quyền nghiệp vụ
-5. Service Desk: I
-
-### 4.15. Decommission database
-
-1. DBA: R
-2. App Team: C
-3. Infra Team: C
-4. Security Team: C nếu có dữ liệu nhạy cảm
-5. Service Owner: A
-6. CAB: A nếu production
-7. Service Desk: I
+> ¹ Với phần thuộc phạm vi. ² Khi có yếu tố bảo mật. ³ Với service account. ⁴ Khi có dữ liệu nhạy cảm. ⁵ Khi production.
 
 ## 5. Quy tắc áp dụng
 
 1. Mỗi ticket production phải xác định ít nhất một A.
 2. Không để một hoạt động rủi ro cao chỉ có R mà không có A.
-3. Người thực hiện và người phê duyệt không nên là cùng một người với change rủi ro cao.
+3. Người thực hiện (R) và người phê duyệt (A) không nên là cùng một người với change rủi ro cao.
 4. RACI phải được cập nhật khi tổ chức thay đổi vai trò hoặc quy trình.
 5. Nếu có xung đột trách nhiệm, DBA Lead và Service Owner phải thống nhất trước khi thực hiện.
+6. Khi một hoạt động có nhiều A, phải xác định rõ A nào quyết định cuối cùng trong trường hợp bất đồng.
 
 ## 6. Evidence liên quan RACI
 
-1. Approval record.
-2. Ticket history.
+1. Approval record trong ticket.
+2. Ticket history ghi nhận người thực hiện.
 3. Comment xác nhận của application owner.
 4. CAB approval nếu có.
 5. Security approval nếu có.
 6. Operation evidence sau thực hiện.
+
+## 7. Liên kết tài liệu liên quan
+
+| Mã tài liệu | Tên tài liệu | Mối liên hệ |
+|-------------|---------------|-------------|
+| DBA-OF-001 | DBA Operations Framework Overview | Tổng quan framework |
+| DBA-OM-001 | DBA Service Catalog | Danh mục dịch vụ DBA |
+| DBA-OM-002 | DBA Operating Model | Mô hình vận hành và escalation |
+| DBA-POL-004 | Database Change Management Policy | Quy trình change |
+| DBA-POL-005 | Backup and Restore Policy | Quy trình backup restore |
+| DBA-POL-007 | Database HA and DR Policy | Quy trình HA DR |

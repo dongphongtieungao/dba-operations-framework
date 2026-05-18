@@ -2,7 +2,7 @@
 status: draft
 framework: DBA Operations Framework
 document_group: Templates and Metrics
-created_for: DBA professional operating system
+doc_id: DBA-TMP-045
 language: vi
 ---
 
@@ -12,7 +12,7 @@ language: vi
 
 | Trường | Giá trị |
 |---|---|
-| Mã tài liệu | TPL-DBA-045 |
+| Mã tài liệu | DBA-TMP-045 |
 | Tên tài liệu | Template Request for Change |
 | Nhóm tài liệu | Template and Metrics |
 | Mức ưu tiên | 2 |
@@ -142,4 +142,5 @@ Tài liệu này cung cấp mẫu Request for Change cho các thay đổi databa
 
 | Version | Ngày | Người cập nhật | Nội dung thay đổi |
 |---|---|---|---|
-| 0.1 | YYYY-MM-DD | DBA Team | Khởi tạo bản nháp |
+| 0.1 | 2026-05-18 | DBA Team | Khởi tạo bản nháp |
+| 0.2 | 2026-05-18 | DBA Team | Chuẩn hóa doc ID |

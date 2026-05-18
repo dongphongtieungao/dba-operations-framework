@@ -2,7 +2,7 @@
 status: draft
 framework: DBA Operations Framework
 document_group: Templates and Metrics
-created_for: DBA professional operating system
+doc_id: DBA-TMP-044
 language: vi
 ---
 
@@ -12,7 +12,7 @@ language: vi
 
 | Trường | Giá trị |
 |---|---|
-| Mã tài liệu | TPL-DBA-044 |
+| Mã tài liệu | DBA-TMP-044 |
 | Tên tài liệu | Template Service Request |
 | Nhóm tài liệu | Template and Metrics |
 | Mức ưu tiên | 2 |
@@ -180,4 +180,5 @@ Tài liệu này cung cấp mẫu yêu cầu dịch vụ DBA để bảo đảm 
 
 | Version | Ngày | Người cập nhật | Nội dung thay đổi |
 |---|---|---|---|
-| 0.1 | YYYY-MM-DD | DBA Team | Khởi tạo bản nháp |
+| 0.1 | 2026-05-18 | DBA Team | Khởi tạo bản nháp |
+| 0.2 | 2026-05-18 | DBA Team | Chuẩn hóa doc ID |

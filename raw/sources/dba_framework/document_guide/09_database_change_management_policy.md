@@ -2,14 +2,28 @@
 
 ## Thông tin tài liệu
 
-1. Mã tài liệu: DBA POL 004
-2. Loại tài liệu: Policy
-3. Mức ưu tiên triển khai: 2
-4. Owner đề xuất: DBA Team
-5. Trạng thái: Draft
-6. Phiên bản: 0.1
-7. Phạm vi áp dụng: SQL Server, Azure SQL, PostgreSQL, MySQL, MariaDB, Oracle, Z DB và các nền tảng database trong môi trường hybrid
-8. Chu kỳ review: 6 tháng hoặc sau sự cố nghiêm trọng, thay đổi kiến trúc, thay đổi quy định bảo mật
+| Trường | Giá trị |
+|--------|---------|
+| Mã tài liệu | DBA-POL-004 |
+| Loại tài liệu | Policy |
+| Mức ưu tiên triển khai | 2 |
+| Owner | DBA Team |
+| Reviewer | DBA Lead, Infra Lead |
+| Approver | Service Owner, CAB |
+| Trạng thái | Draft |
+| Phiên bản | 0.2 |
+| Ngày tạo | 2026-05-18 |
+| Ngày review gần nhất | 2026-05-18 |
+| Ngày review tiếp theo | 2026-11-18 |
+| Phạm vi áp dụng | SQL Server, Azure SQL, PostgreSQL, MySQL, MariaDB, Oracle, Z DB |
+| Chu kỳ review | 6 tháng hoặc sau sự cố nghiêm trọng |
+
+### Lịch sử thay đổi
+
+| Phiên bản | Ngày | Người thay đổi | Mô tả |
+|-----------|------|----------------|-------|
+| 0.1 | 2026-05-18 | DBA Team | Bản draft đầu tiên |
+| 0.2 | 2026-05-18 | DBA Team | Bổ sung change freeze, post-change monitoring, metadata |
 
 ## 1. Mục đích
 
@@ -55,7 +69,17 @@ Thay đổi khẩn cấp để xử lý sự cố nghiêm trọng, ngăn mất d
 7. Change phải được thực hiện trong maintenance window nếu có nguy cơ ảnh hưởng dịch vụ.
 8. Change lớn phải được peer review.
 
-## 5. Nội dung RFC bắt buộc
+## 5. Change freeze period
+
+1. Không deploy change production trong các thời điểm sau trừ khi có approval đặc biệt:
+   1. Peak business hours đã được xác định.
+   2. Cuối tháng hoặc cuối quý đối với hệ thống tài chính.
+   3. Holiday hoặc thời gian nghỉ lễ khi DBA on-call giảm.
+   4. Thời gian trước và trong audit quan trọng.
+2. Change freeze phải được công bố trước ít nhất 1 tuần.
+3. Emergency change vẫn được phép trong change freeze nếu có approval khẩn cấp.
+
+## 6. Nội dung RFC bắt buộc
 
 1. Mã change.
 2. Người yêu cầu.
@@ -74,7 +98,7 @@ Thay đổi khẩn cấp để xử lý sự cố nghiêm trọng, ngăn mất d
 15. Người phê duyệt.
 16. Evidence cần đính kèm.
 
-## 6. Review thay đổi database
+## 7. Review thay đổi database
 
 DBA phải review các điểm sau trước khi approve hoặc thực hiện:
 
@@ -89,7 +113,7 @@ DBA phải review các điểm sau trước khi approve hoặc thực hiện:
 9. Có rollback thực tế hay chỉ mô tả hình thức.
 10. Có kế hoạch validation sau thay đổi hay không.
 
-## 7. Điều kiện triển khai production
+## 8. Điều kiện triển khai production
 
 1. RFC đã được phê duyệt.
 2. Script đã được review.
@@ -100,7 +124,15 @@ DBA phải review các điểm sau trước khi approve hoặc thực hiện:
 7. Bên ứng dụng sẵn sàng kiểm tra.
 8. Monitoring sẵn sàng theo dõi trong và sau thay đổi.
 
-## 8. Emergency change
+## 9. Post-change monitoring
+
+1. Sau change production, DBA phải monitor hệ thống ít nhất 30 phút trước khi rời khỏi.
+2. Với change rủi ro cao, monitoring window tối thiểu 2 giờ.
+3. Trong monitoring window, DBA phải theo dõi: error log, query performance, replication lag, connection count, alert mới.
+4. Nếu phát hiện degradation trong monitoring window, DBA phải quyết định rollback hoặc mitigation.
+5. Change chỉ được đóng ticket sau khi monitoring window kết thúc mà không có issue.
+
+## 10. Emergency change
 
 1. Emergency change được phép khi hệ thống production đang bị ảnh hưởng nghiêm trọng hoặc có nguy cơ mất dữ liệu.
 2. Phải có approval tối thiểu từ DBA Lead hoặc Service Owner theo kênh khẩn cấp.
@@ -108,15 +140,15 @@ DBA phải review các điểm sau trước khi approve hoặc thực hiện:
 4. Sau khi xử lý, phải tạo hoặc cập nhật emergency change record.
 5. PIR bắt buộc nếu emergency change liên quan P1 hoặc P2.
 
-## 9. Rollback
+## 11. Rollback
 
 1. Rollback phải được kiểm tra tính khả thi trước khi change.
-2. Với thay đổi dữ liệu lớn, rollback bằng script ngược có thể không đủ, cần phương án restore hoặc restore object level nếu có.
-3. Không được ghi rollback plan chung chung như rollback nếu lỗi.
+2. Với thay đổi dữ liệu lớn, rollback bằng script ngược có thể không đủ, cần phương án restore.
+3. Không được ghi rollback plan chung chung như "rollback nếu lỗi".
 4. Rollback plan phải chỉ rõ điều kiện kích hoạt rollback.
 5. Rollback phải có người quyết định.
 
-## 10. Evidence bắt buộc
+## 12. Evidence bắt buộc
 
 1. RFC approval.
 2. Script version.
@@ -128,7 +160,7 @@ DBA phải review các điểm sau trước khi approve hoặc thực hiện:
 8. Rollback evidence nếu rollback được thực hiện.
 9. Xác nhận của application owner nếu cần.
 
-## 11. Chỉ số tuân thủ
+## 13. Chỉ số tuân thủ
 
 1. Change success rate.
 2. Rollback rate.
@@ -137,3 +169,13 @@ DBA phải review các điểm sau trước khi approve hoặc thực hiện:
 5. Change không có evidence đầy đủ.
 6. Change không có rollback plan.
 7. Change triển khai ngoài maintenance window không được phê duyệt.
+8. Post-change issue detected within monitoring window.
+
+## 14. Liên kết tài liệu liên quan
+
+| Mã tài liệu | Tên tài liệu | Mối liên hệ |
+|-------------|---------------|-------------|
+| DBA-POL-006 | Database Audit and Compliance Policy | Audit change event |
+| DBA-OM-003 | DBA RACI Matrix | Trách nhiệm change |
+| DBA-OM-002 | DBA Operating Model | Luồng xử lý change |
+| DBA-POL-005 | Backup and Restore Policy | Backup trước change |

@@ -1,16 +1,29 @@
 # SOP Blocking and Deadlock Handling
+
 ## Thông tin tài liệu
+
 | Trường | Giá trị |
-|---|---|
-| Mã tài liệu | DBA SOP 026 |
+|--------|--------|
+| Mã tài liệu | DBA-SOP-026 |
 | Loại tài liệu | SOP |
 | Mức ưu tiên triển khai | 4 |
-| Owner đề xuất | DBA Team |
-| Reviewer đề xuất | Database Lead, Service Owner, Security hoặc Infra Lead tùy phạm vi |
+| Owner | DBA Team |
+| Reviewer | DBA Lead, Service Owner, Infra Lead |
+| Approver | DBA Lead |
 | Trạng thái | Draft |
-| Phiên bản | 0.1 |
-| Phạm vi DBMS | SQL Server, Azure SQL, PostgreSQL, MySQL, MariaDB, Oracle, Z DB |
+| Phiên bản | 0.2 |
+| Ngày tạo | 2026-05-18 |
+| Ngày review gần nhất | 2026-05-18 |
+| Ngày review tiếp theo | 2026-11-18 |
+| Phạm vi áp dụng | SQL Server, Azure SQL, PostgreSQL, MySQL, MariaDB, Oracle, Z DB |
 | Chu kỳ review | 6 tháng hoặc sau sự cố nghiêm trọng, thay đổi kiến trúc, thay đổi policy |
+
+### Lịch sử thay đổi
+
+| Phiên bản | Ngày | Người thay đổi | Mô tả |
+|-----------|------|----------------|-------|
+| 0.1 | 2026-05-18 | DBA Team | Bản draft đầu tiên |
+| 0.2 | 2026-05-18 | DBA Team | Chuẩn hóa metadata, cross-reference |
 
 ## 1. Mục đích
 
@@ -141,16 +154,13 @@ Không thể rollback trực tiếp thao tác kill session ngoài việc để d
 
 ## 13. Liên kết tài liệu liên quan
 
-1. DBA Operations Framework Overview
-2. DBA Service Catalog
-3. DBA Operating Model
-4. DBA RACI Matrix
-5. DBA Document Governance Standard
-6. Database Change Management Policy
-7. Database Security Policy
-8. Database Audit and Compliance Policy
-9. Template Operation Evidence
-10. Template Post Incident Review nếu có incident nghiêm trọng
+| Mã tài liệu | Tên tài liệu | Mối liên hệ |
+|-------------|---------------|-------------|
+| DBA-SOP-025 | SOP Performance Troubleshooting | SOP performance liên quan |
+| DBA-POL-004 | Database Change Management Policy | RFC cho mitigation |
+| DBA-OM-001 | DBA Service Catalog | Service mapping |
+| DBA-TMP-048 | Template Operation Evidence | Template evidence |
+| DBA-TMP-047 | Template Post Incident Review | Template PIR |
 
 ## 14. Checklist rút gọn
 

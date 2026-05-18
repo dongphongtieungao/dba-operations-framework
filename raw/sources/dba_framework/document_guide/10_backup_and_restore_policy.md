@@ -2,14 +2,28 @@
 
 ## Thông tin tài liệu
 
-1. Mã tài liệu: DBA POL 005
-2. Loại tài liệu: Policy
-3. Mức ưu tiên triển khai: 1
-4. Owner đề xuất: DBA Team
-5. Trạng thái: Draft
-6. Phiên bản: 0.1
-7. Phạm vi áp dụng: SQL Server, Azure SQL, PostgreSQL, MySQL, MariaDB, Oracle, Z DB và các nền tảng database trong môi trường hybrid
-8. Chu kỳ review: 6 tháng hoặc sau sự cố nghiêm trọng, thay đổi kiến trúc, thay đổi quy định bảo mật
+| Trường | Giá trị |
+|--------|---------|
+| Mã tài liệu | DBA-POL-005 |
+| Loại tài liệu | Policy |
+| Mức ưu tiên triển khai | 1 |
+| Owner | DBA Team |
+| Reviewer | DBA Lead, Infra Lead, Security Lead |
+| Approver | Service Owner |
+| Trạng thái | Draft |
+| Phiên bản | 0.2 |
+| Ngày tạo | 2026-05-18 |
+| Ngày review gần nhất | 2026-05-18 |
+| Ngày review tiếp theo | 2026-11-18 |
+| Phạm vi áp dụng | SQL Server, Azure SQL, PostgreSQL, MySQL, MariaDB, Oracle, Z DB và các nền tảng database trong môi trường hybrid |
+| Chu kỳ review | 6 tháng hoặc sau sự cố nghiêm trọng, thay đổi kiến trúc, thay đổi quy định bảo mật |
+
+### Lịch sử thay đổi
+
+| Phiên bản | Ngày | Người thay đổi | Mô tả |
+|-----------|------|----------------|-------|
+| 0.1 | 2026-05-18 | DBA Team | Bản draft đầu tiên |
+| 0.2 | 2026-05-18 | DBA Team | Bổ sung backup tier table, immutable backup, system DB, chuẩn hóa metadata |
 
 ## 1. Mục đích
 
@@ -18,6 +32,8 @@ Chính sách này định nghĩa nguyên tắc bảo vệ dữ liệu thông qua
 ## 2. Phạm vi
 
 Áp dụng cho tất cả database production, database quan trọng tại non production, backup file, snapshot, transaction log, WAL, binlog, archive log và long term retention.
+
+Bao gồm cả system database nếu DBMS có yêu cầu. Ví dụ: SQL Server phải backup master, msdb, model. PostgreSQL phải backup global objects.
 
 ## 3. Nguyên tắc
 
@@ -46,29 +62,52 @@ RTO là thời gian tối đa để khôi phục dịch vụ hoặc dữ liệu 
 2. RPO và RTO phải được kiểm chứng bằng restore drill hoặc DR drill.
 3. Nếu RPO hoặc RTO không thể đạt bằng kiến trúc hiện tại, DBA phải ghi nhận risk register.
 
-## 5. Loại backup
+## 5. Backup tier đề xuất
 
-### 5.1. Full backup
+Bảng dưới đây là mẫu tham khảo. Giá trị cụ thể phải được service owner phê duyệt cho từng hệ thống.
+
+| Thuộc tính | Tier 1 Critical | Tier 2 Important | Tier 3 Standard | Tier 4 Dev/Test |
+|-----------|----------------|-----------------|----------------|----------------|
+| RPO | ≤ 5 phút | ≤ 1 giờ | ≤ 24 giờ | ≤ 24 giờ hoặc không yêu cầu |
+| RTO | ≤ 1 giờ | ≤ 4 giờ | ≤ 24 giờ | ≤ 48 giờ hoặc không yêu cầu |
+| Full backup | Hằng ngày | Hằng ngày | Hằng ngày | Hằng tuần |
+| Log/WAL/Binlog backup | 5–15 phút | 15–30 phút | Không bắt buộc | Không bắt buộc |
+| Differential/Incremental | Mỗi 4–6 giờ | Mỗi 6–12 giờ | Không bắt buộc | Không bắt buộc |
+| Retention | 30 ngày trở lên | 14 ngày trở lên | 7 ngày trở lên | 3 ngày |
+| Offsite copy | Bắt buộc | Khuyến nghị | Tùy chọn | Không yêu cầu |
+| Encryption | Bắt buộc | Bắt buộc nếu P2/P3 | Tùy chọn | Không yêu cầu |
+| Immutable backup | Bắt buộc | Khuyến nghị | Tùy chọn | Không yêu cầu |
+| Restore drill | Hằng quý | 6 tháng | Hằng năm | Không bắt buộc |
+
+> **DBMS Implementation**: Xem chi tiết backup implementation cho từng DBMS tại: SQL Server (DBA-APP-001), PostgreSQL (DBA-APP-002), MySQL/MariaDB (DBA-APP-003), Oracle (DBA-APP-004), Azure SQL (DBA-APP-005).
+
+## 6. Loại backup
+
+### 6.1. Full backup
 
 Backup toàn bộ database hoặc toàn bộ phạm vi dữ liệu theo DBMS.
 
-### 5.2. Incremental hoặc differential backup
+### 6.2. Incremental hoặc differential backup
 
 Backup phần thay đổi từ mốc trước đó tùy DBMS hỗ trợ.
 
-### 5.3. Transaction log, WAL, binlog hoặc archive log backup
+### 6.3. Transaction log, WAL, binlog hoặc archive log backup
 
 Backup log để hỗ trợ point in time recovery.
 
-### 5.4. Snapshot
+### 6.4. Snapshot
 
 Snapshot có thể dùng như một lớp bảo vệ bổ sung, nhưng không thay thế hoàn toàn backup nếu chưa chứng minh được khả năng restore độc lập.
 
-### 5.5. Export logic
+### 6.5. Export logic
 
 Export bằng dump hoặc công cụ logic có thể dùng cho migration, kiểm thử hoặc backup bổ sung, nhưng phải đánh giá giới hạn về consistency, performance và thời gian restore.
 
-## 6. Retention backup
+### 6.6. System database backup
+
+Đối với DBMS có system database riêng, phải backup theo yêu cầu. Ví dụ SQL Server phải backup master, msdb, model. Mất system database có thể dẫn đến không khôi phục được instance.
+
+## 7. Retention backup
 
 1. Retention phải dựa trên yêu cầu nghiệp vụ, pháp lý và data lifecycle.
 2. Backup production phải có retention tối thiểu được phê duyệt.
@@ -76,21 +115,29 @@ Export bằng dump hoặc công cụ logic có thể dùng cho migration, kiểm
 4. Backup hết hạn phải được xóa theo quy trình được kiểm soát.
 5. Không xóa backup trước thời hạn nếu không có approval.
 
-## 7. Offsite backup
+## 8. Offsite backup
 
 1. Database critical phải có bản backup hoặc bản sao khôi phục ở vị trí khác với hệ thống chính nếu yêu cầu DR.
 2. Offsite backup phải được kiểm tra khả năng truy cập.
 3. Offsite backup chứa dữ liệu nhạy cảm phải được mã hóa.
 4. Offsite backup phải có retention rõ ràng.
 
-## 8. Encryption backup
+## 9. Immutable backup
+
+1. Database Tier 1 phải có ít nhất một bản backup immutable hoặc WORM nếu platform hỗ trợ.
+2. Immutable backup giúp bảo vệ khỏi ransomware, xóa nhầm và insider threat.
+3. Thời gian immutability phải được service owner phê duyệt.
+4. Không ai được phép xóa hoặc sửa immutable backup trước khi hết hạn immutability.
+5. Nếu platform không hỗ trợ immutable backup, phải có biện pháp thay thế được ghi nhận.
+
+## 10. Encryption backup
 
 1. Backup chứa P2 hoặc P3 phải được mã hóa.
 2. Key dùng để mã hóa backup phải được bảo vệ.
 3. Nếu mất key khiến backup không thể restore, phải ghi nhận sự cố nghiêm trọng.
 4. Key rotation phải kiểm tra tương thích với restore backup cũ.
 
-## 9. Backup monitoring
+## 11. Backup monitoring
 
 Phải giám sát tối thiểu các chỉ số sau:
 
@@ -104,16 +151,16 @@ Phải giám sát tối thiểu các chỉ số sau:
 8. Backup chain validity nếu DBMS hỗ trợ.
 9. Replication hoặc log archive status nếu ảnh hưởng PITR.
 
-## 10. Restore drill
+## 12. Restore drill
 
-1. Restore drill phải được thực hiện định kỳ với database đại diện.
+1. Restore drill phải được thực hiện định kỳ theo backup tier.
 2. Database critical phải được ưu tiên restore drill.
 3. Restore drill phải đo thời gian thực tế.
 4. Restore drill phải kiểm tra dữ liệu sau restore.
 5. Restore drill phải tạo báo cáo gồm RTO thực tế, RPO thực tế, lỗi phát sinh và action item.
 6. Không coi một hệ thống đạt yêu cầu backup nếu restore drill liên tục thất bại.
 
-## 11. Restore production
+## 13. Restore production
 
 1. Restore production phải có ticket.
 2. Restore production phải có approval của service owner.
@@ -123,7 +170,7 @@ Phải giám sát tối thiểu các chỉ số sau:
 6. Phải có validation sau restore.
 7. Phải lưu evidence đầy đủ.
 
-## 12. Backup failure handling
+## 14. Backup failure handling
 
 1. Backup failed phải tạo alert hoặc ticket.
 2. DBA phải xác định nguyên nhân.
@@ -131,9 +178,19 @@ Phải giám sát tối thiểu các chỉ số sau:
 4. Sau khi xử lý, DBA phải chạy backup bù nếu cần.
 5. Phải ghi nhận nguyên nhân và biện pháp ngăn tái diễn nếu lỗi lặp lại.
 
-## 13. Evidence bắt buộc
+## 15. Ngoại lệ
 
-### 13.1. Backup evidence
+Ngoại lệ backup chỉ được chấp nhận khi:
+
+1. Có lý do nghiệp vụ hoặc kỹ thuật rõ ràng.
+2. Có đánh giá rủi ro.
+3. Có phê duyệt của service owner.
+4. Có ngày hết hạn ngoại lệ.
+5. Có ghi nhận trong risk register.
+
+## 16. Evidence bắt buộc
+
+### 16.1. Backup evidence
 
 1. Database.
 2. Backup type.
@@ -143,7 +200,7 @@ Phải giám sát tối thiểu các chỉ số sau:
 6. Vị trí backup.
 7. Lỗi nếu có.
 
-### 13.2. Restore evidence
+### 16.2. Restore evidence
 
 1. Ticket ID.
 2. Database nguồn.
@@ -156,7 +213,7 @@ Phải giám sát tối thiểu các chỉ số sau:
 9. Validation result.
 10. Người xác nhận.
 
-## 14. Chỉ số tuân thủ
+## 17. Chỉ số tuân thủ
 
 1. Backup success rate.
 2. Backup overdue count.
@@ -166,3 +223,14 @@ Phải giám sát tối thiểu các chỉ số sau:
 6. Backup storage risk count.
 7. Backup encryption compliance.
 8. Số backup failure lặp lại.
+9. Immutable backup coverage cho Tier 1.
+
+## 18. Liên kết tài liệu liên quan
+
+| Mã tài liệu | Tên tài liệu | Mối liên hệ |
+|-------------|---------------|-------------|
+| DBA-POL-001 | Data Lifecycle Management Policy | Retention và data classification |
+| DBA-POL-002 | Database Security Policy | Encryption và key management |
+| DBA-POL-007 | Database HA and DR Policy | RPO, RTO và DR strategy |
+| DBA-POL-006 | Database Audit and Compliance Policy | Audit backup restore event |
+| DBA-OM-003 | DBA RACI Matrix | Trách nhiệm backup restore |

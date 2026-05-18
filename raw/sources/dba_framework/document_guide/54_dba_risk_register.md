@@ -1,20 +1,24 @@
 ---
-doc_id: RSK-054
+doc_id: DBA-RSK-054
 title: "DBA Risk Register"
 doc_type: management
-implementation_order: 2
+priority: 2
 status: draft
 owner: DBA Team
 reviewer: DBA Lead
 approver: Service Owner
-version: 0.1
+version: 0.2
 created_date: 2026-05-15
-last_updated: 2026-05-15
+last_updated: 2026-05-18
 language: vi
 framework: DBA Operations Framework
+related_documents:
+  - DBA-TMP-047 Template Post Incident Review
+  - DBA-TMP-051 Template Monthly DBA Report
+  - DBA-MET-052 DBA KPI and Metrics Catalog
 ---
 
-# RSK-054 - DBA Risk Register
+# DBA-RSK-054 - DBA Risk Register
 
 ## 1. Mục đích
 

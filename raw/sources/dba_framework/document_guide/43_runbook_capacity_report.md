@@ -1,20 +1,24 @@
 ---
-doc_id: RBK-043
+doc_id: DBA-RBK-043
 title: "Runbook Capacity Report"
 doc_type: runbook
-implementation_order: 2
+priority: 2
 status: draft
 owner: DBA Team
 reviewer: DBA Lead
 approver: Service Owner
-version: 0.1
+version: 0.2
 created_date: 2026-05-15
-last_updated: 2026-05-15
+last_updated: 2026-05-18
 language: vi
 framework: DBA Operations Framework
+related_documents:
+  - DBA-POL-005 Backup and Restore Policy
+  - DBA-TMP-051 Template Monthly DBA Report
+  - DBA-RSK-054 DBA Risk Register
 ---
 
-# RBK-043 - Runbook Capacity Report
+# DBA-RBK-043 - Runbook Capacity Report
 
 ## 1. Mục đích
 

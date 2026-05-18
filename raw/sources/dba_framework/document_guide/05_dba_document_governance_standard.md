@@ -2,14 +2,28 @@
 
 ## Thông tin tài liệu
 
-1. Mã tài liệu: DBA DG 001
-2. Loại tài liệu: Standard
-3. Mức ưu tiên triển khai: 3
-4. Owner đề xuất: DBA Team
-5. Trạng thái: Draft
-6. Phiên bản: 0.1
-7. Phạm vi áp dụng: SQL Server, Azure SQL, PostgreSQL, MySQL, MariaDB, Oracle, Z DB và các nền tảng database trong môi trường hybrid
-8. Chu kỳ review: 6 tháng hoặc sau sự cố nghiêm trọng, thay đổi kiến trúc, thay đổi quy định bảo mật
+| Trường | Giá trị |
+|--------|---------|
+| Mã tài liệu | DBA-DG-001 |
+| Loại tài liệu | Standard |
+| Mức ưu tiên triển khai | 3 |
+| Owner | DBA Team |
+| Reviewer | DBA Lead |
+| Approver | Service Owner |
+| Trạng thái | Draft |
+| Phiên bản | 0.2 |
+| Ngày tạo | 2026-05-18 |
+| Ngày review gần nhất | 2026-05-18 |
+| Ngày review tiếp theo | 2026-11-18 |
+| Phạm vi áp dụng | SQL Server, Azure SQL, PostgreSQL, MySQL, MariaDB, Oracle, Z DB và các nền tảng database trong môi trường hybrid |
+| Chu kỳ review | 6 tháng hoặc sau sự cố nghiêm trọng, thay đổi kiến trúc, thay đổi quy định bảo mật |
+
+### Lịch sử thay đổi
+
+| Phiên bản | Ngày | Người thay đổi | Mô tả |
+|-----------|------|----------------|-------|
+| 0.1 | 2026-05-18 | DBA Team | Bản draft đầu tiên |
+| 0.2 | 2026-05-18 | DBA Team | Bổ sung YAML template, review deadline, chuẩn hóa mã tài liệu, metadata |
 
 ## 1. Mục đích
 
@@ -32,29 +46,29 @@ Tài liệu này quy định cách tạo, đặt mã, review, phê duyệt, cậ
 
 ## 3. Quy tắc mã tài liệu
 
-### 3.1. Nhóm mã
+### 3.1. Format mã
 
-1. DBA OF: Framework overview.
-2. DBA OM: Operating model.
-3. DBA POL: Policy.
-4. DBA STD: Standard.
-5. DBA SOP: Standard operating procedure.
-6. DBA RBK: Runbook.
-7. DBA TMP: Template.
-8. DBA RPT: Report.
-9. DBA APP: DBMS appendix.
-10. DBA KB: Knowledge base.
+Mã tài liệu sử dụng format: `DBA-<NHÓM>-<SỐ>`. Dấu gạch ngang giúp dễ tìm kiếm bằng grep, regex và tích hợp KMS.
 
-### 3.2. Ví dụ mã
+### 3.2. Nhóm mã
 
-1. DBA POL 001: Backup and Restore Policy.
-2. DBA SOP 003: Restore Operation.
-3. DBA RBK 002: Backup Verification Runbook.
-4. DBA TMP 004: Operation Evidence Template.
+| Nhóm | Mô tả | Ví dụ |
+|------|-------|-------|
+| DBA-OF | Framework overview | DBA-OF-001 |
+| DBA-OM | Operating model | DBA-OM-001 |
+| DBA-DG | Document governance | DBA-DG-001 |
+| DBA-POL | Policy | DBA-POL-001 |
+| DBA-STD | Standard | DBA-STD-001 |
+| DBA-SOP | Standard operating procedure | DBA-SOP-001 |
+| DBA-RBK | Runbook | DBA-RBK-001 |
+| DBA-TMP | Template | DBA-TMP-001 |
+| DBA-RPT | Report | DBA-RPT-001 |
+| DBA-APP | DBMS appendix | DBA-APP-001 |
+| DBA-KB | Knowledge base | DBA-KB-001 |
 
 ## 4. Metadata bắt buộc
 
-Mỗi tài liệu phải có các thông tin sau:
+Mỗi tài liệu phải có các thông tin sau trong header dạng bảng:
 
 1. Mã tài liệu.
 2. Tên tài liệu.
@@ -68,9 +82,35 @@ Mỗi tài liệu phải có các thông tin sau:
 10. Ngày review gần nhất.
 11. Ngày review tiếp theo.
 12. Phạm vi áp dụng.
-13. Tài liệu liên quan.
-14. Evidence liên quan nếu có.
+13. Chu kỳ review.
+14. Tài liệu liên quan.
 15. Lịch sử thay đổi.
+
+### 4.1. YAML frontmatter template
+
+Nếu sử dụng Markdown với KMS hoặc Obsidian, khuyến nghị thêm YAML frontmatter để hỗ trợ agent tìm kiếm:
+
+```yaml
+---
+doc_id: DBA-POL-001
+title: Data Lifecycle Management Policy
+type: policy
+owner: DBA Team
+reviewer: DBA Lead
+approver: Service Owner
+status: active
+version: "1.0"
+created: 2026-01-01
+last_reviewed: 2026-01-01
+next_review: 2026-07-01
+scope: [sql_server, azure_sql, postgresql, mysql, mariadb, oracle, zdb]
+related_policy: []
+related_sop: [DBA-SOP-003]
+related_runbook: [DBA-RBK-002]
+evidence_required: true
+tags: [policy, backup, restore, rpo, rto]
+---
+```
 
 ## 5. Trạng thái tài liệu
 
@@ -111,6 +151,7 @@ Tài liệu đã ngừng sử dụng và chỉ lưu để truy vết lịch sử
 7. Evidence và kiểm toán.
 8. Chỉ số tuân thủ.
 9. Chu kỳ review.
+10. Liên kết tài liệu liên quan.
 
 ### 6.2. Standard
 
@@ -161,7 +202,7 @@ Tài liệu đã ngừng sử dụng và chỉ lưu để truy vết lịch sử
 
 1. Xác định nhu cầu tài liệu.
 2. Chọn loại tài liệu.
-3. Đặt mã tài liệu.
+3. Đặt mã tài liệu theo format DBA-<NHÓM>-<SỐ>.
 4. Chỉ định owner.
 5. Soạn bản Draft.
 6. Review với bên liên quan.
@@ -180,14 +221,28 @@ Tài liệu đã ngừng sử dụng và chỉ lưu để truy vết lịch sử
 6. Ghi lịch sử thay đổi.
 7. Thông báo cho team liên quan.
 
-## 9. Quy tắc version
+## 9. Quy tắc review
+
+### 9.1. Review deadline
+
+1. Sau khi gửi review, reviewer phải phản hồi trong 5 ngày làm việc.
+2. Nếu reviewer không phản hồi, owner escalation tới DBA Lead.
+3. Nếu DBA Lead không phản hồi trong 3 ngày tiếp theo, tài liệu có thể được chuyển trạng thái với ghi nhận review chưa hoàn tất.
+
+### 9.2. Review định kỳ
+
+1. Tài liệu Active phải được review theo chu kỳ ghi trong metadata.
+2. DBA Lead chịu trách nhiệm theo dõi lịch review.
+3. Tài liệu quá hạn review phải được báo cáo trong monthly DBA report.
+
+## 10. Quy tắc version
 
 1. Thay đổi nhỏ về câu chữ tăng patch version.
 2. Thay đổi quy trình, step hoặc checklist tăng minor version.
 3. Thay đổi chính sách, phạm vi hoặc trách nhiệm tăng major version.
 4. Không chỉnh tài liệu Active mà không cập nhật lịch sử thay đổi.
 
-## 10. Quy tắc archive
+## 11. Quy tắc archive
 
 Tài liệu được archive khi:
 
@@ -197,7 +252,7 @@ Tài liệu được archive khi:
 4. Policy mới đã thay thế hoàn toàn.
 5. Owner và approver xác nhận archive.
 
-## 11. Chỉ số đánh giá
+## 12. Chỉ số đánh giá
 
 1. Tỷ lệ tài liệu có owner.
 2. Tỷ lệ tài liệu được review đúng hạn.
@@ -205,3 +260,11 @@ Tài liệu được archive khi:
 4. Tỷ lệ runbook có validation.
 5. Số tài liệu Active quá hạn review.
 6. Số sự cố do tài liệu lỗi thời hoặc thiếu tài liệu.
+
+## 13. Liên kết tài liệu liên quan
+
+| Mã tài liệu | Tên tài liệu | Mối liên hệ |
+|-------------|---------------|-------------|
+| DBA-OF-001 | DBA Operations Framework Overview | Tổng quan framework |
+| DBA-OM-001 | DBA Service Catalog | Mapping service tới SOP |
+| DBA-KB-001 | DBA Knowledge Base Index | Index tra cứu |

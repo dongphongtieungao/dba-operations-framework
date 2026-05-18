@@ -1,25 +1,24 @@
-  ---
-  doc_id: RBK-041
-  title: "Runbook Failover Execution"
-  doc_type: runbook
-  priority: 1
-  status: draft
-  owner: DBA Team
-  reviewer: DBA Lead
-  approver: Service Owner
-  version: 0.1
-  created_date: 2026-05-15
-  last_updated: 2026-05-15
-  related_documents:
-    - POL-012 Database HA and DR Policy
-- SOP-028 HA Failover and Switchover
-- SOP-029 Disaster Recovery Drill
-- TPL-048 Operation Evidence
-- TPL-050 Failover Drill Report
-- MET-052 DBA KPI and Metrics Catalog
-  ---
+---
+doc_id: DBA-RBK-041
+title: "Runbook Failover Execution"
+doc_type: runbook
+priority: 1
+status: draft
+owner: DBA Team
+reviewer: DBA Lead
+approver: Service Owner
+version: 0.2
+created_date: 2026-05-15
+last_updated: 2026-05-18
+related_documents:
+  - DBA-POL-007 Database HA and DR Policy
+  - DBA-SOP-028 SOP HA Failover and Switchover
+  - DBA-SOP-029 SOP Disaster Recovery Drill
+  - DBA-TMP-048 Template Operation Evidence
+  - DBA-TMP-050 Template Failover Drill Report
+---
 
-  # RBK-041 - Runbook Failover Execution
+# DBA-RBK-041 - Runbook Failover Execution
 
   ## 1. Mục đích
 
