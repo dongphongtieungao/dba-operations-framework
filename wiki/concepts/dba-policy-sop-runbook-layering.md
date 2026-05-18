@@ -6,10 +6,26 @@ created: 2026-05-15
 updated: 2026-05-15
 key_sources:
   - [[sources/dba-operations-framework]]
+  - [[sources/runbook-failover-execution]]
+  - [[sources/runbook-database-health-check]]
+  - [[sources/runbook-capacity-report]]
+  - [[sources/runbook-database-provisioning]]
+  - [[sources/runbook-user-provisioning]]
+  - [[sources/runbook-backup-verification]]
+  - [[sources/runbook-restore-validation]]
+  - [[sources/runbook-add-replica]]
 related_concepts:
   - [[concepts/dba-operations-framework]]
   - [[concepts/dba-document-governance]]
   - [[concepts/dba-automation-lifecycle]]
+  - [[concepts/dba-failover-execution-runbook]]
+  - [[concepts/database-health-check-runbook]]
+  - [[concepts/database-capacity-reporting]]
+  - [[concepts/database-provisioning-runbook]]
+  - [[concepts/database-user-provisioning-runbook]]
+  - [[concepts/backup-verification-runbook]]
+  - [[concepts/restore-validation-runbook]]
+  - [[concepts/database-replica-provisioning]]
 confidence: unverified
 ---
 
@@ -26,6 +42,14 @@ DBA Policy SOP Runbook Layering là cách phân tầng tài liệu vận hành: 
 ## Key Sources
 
 - [[sources/dba-operations-framework]]
+- [[sources/runbook-failover-execution]]
+- [[sources/runbook-database-health-check]]
+- [[sources/runbook-capacity-report]]
+- [[sources/runbook-database-provisioning]]
+- [[sources/runbook-user-provisioning]]
+- [[sources/runbook-backup-verification]]
+- [[sources/runbook-restore-validation]]
+- [[sources/runbook-add-replica]]
 
 ## Related Concepts
 
@@ -34,8 +58,15 @@ DBA Policy SOP Runbook Layering là cách phân tầng tài liệu vận hành: 
 - [[concepts/dba-automation-lifecycle]]
 - [[concepts/sql-server-backup-restore-operations]]
 - [[concepts/high-availability-and-disaster-recovery]]
+- [[concepts/dba-failover-execution-runbook]]
+- [[concepts/database-health-check-runbook]]
+- [[concepts/database-capacity-reporting]]
+- [[concepts/database-provisioning-runbook]]
+- [[concepts/database-user-provisioning-runbook]]
+- [[concepts/backup-verification-runbook]]
+- [[concepts/restore-validation-runbook]]
+- [[concepts/database-replica-provisioning]]
 
 ## Mentioned In
 
 ## Notes
-

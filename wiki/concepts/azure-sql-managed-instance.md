@@ -9,10 +9,12 @@ key_sources:
   - [[sources/azure-sql-documentation]]
   - [[sources/azure-database-migration-service-documentation]]
   - [[sources/azure-database-migration-guides]]
+  - [[sources/azure-sql-operations-appendix]]
 related_concepts:
   - [[concepts/azure-sql]]
   - [[concepts/database-migration]]
   - [[concepts/online-and-offline-migration]]
+  - [[concepts/azure-sql-operations-appendix]]
 confidence: unverified
 ---
 
@@ -31,12 +33,14 @@ Azure SQL Managed Instance là lựa chọn PaaS ở mức instance cho SQL Serv
 - [[sources/azure-sql-documentation]]
 - [[sources/azure-database-migration-service-documentation]]
 - [[sources/azure-database-migration-guides]]
+- [[sources/azure-sql-operations-appendix]]
 
 ## Related Concepts
 
 - [[concepts/azure-sql-database]]
 - [[concepts/sql-server-on-azure-vms]]
 - [[concepts/high-availability-and-disaster-recovery]]
+- [[concepts/azure-sql-operations-appendix]]
 
 ## Mentioned In
 

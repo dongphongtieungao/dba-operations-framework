@@ -6,11 +6,15 @@ created: 2026-05-15
 updated: 2026-05-15
 key_sources:
   - [[sources/dba-operations-framework]]
+  - [[sources/runbook-backup-verification]]
+  - [[sources/runbook-restore-validation]]
 related_concepts:
   - [[concepts/dba-control-plane]]
   - [[concepts/dba-service-catalog]]
   - [[concepts/dba-operations-kpi-and-risk]]
   - [[concepts/dba-production-mindset]]
+  - [[concepts/backup-verification-runbook]]
+  - [[concepts/restore-validation-runbook]]
 confidence: unverified
 ---
 
@@ -27,6 +31,8 @@ DBA Evidence Driven Operations là nguyên tắc mọi thao tác vận hành qua
 ## Key Sources
 
 - [[sources/dba-operations-framework]]
+- [[sources/runbook-backup-verification]]
+- [[sources/runbook-restore-validation]]
 
 ## Related Concepts
 
@@ -35,8 +41,9 @@ DBA Evidence Driven Operations là nguyên tắc mọi thao tác vận hành qua
 - [[concepts/dba-operations-kpi-and-risk]]
 - [[concepts/dba-production-mindset]]
 - [[concepts/incident-response-and-rca]]
+- [[concepts/backup-verification-runbook]]
+- [[concepts/restore-validation-runbook]]
 
 ## Mentioned In
 
 ## Notes
-

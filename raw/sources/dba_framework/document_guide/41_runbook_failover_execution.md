@@ -3,13 +3,15 @@ doc_id: DBA-RBK-041
 title: "Runbook Failover Execution"
 doc_type: runbook
 priority: 1
-status: draft
+status: ready_for_review
 owner: DBA Team
 reviewer: DBA Lead
 approver: Service Owner
-version: 0.2
+version: 1.0
 created_date: 2026-05-15
 last_updated: 2026-05-18
+language: vi
+framework: DBA Operations Framework
 related_documents:
   - DBA-POL-007 Database HA and DR Policy
   - DBA-SOP-028 SOP HA Failover and Switchover
@@ -20,15 +22,15 @@ related_documents:
 
 # DBA-RBK-041 - Runbook Failover Execution
 
-  ## 1. Mục đích
+## 1. Mục đích
 
-  Tự động hóa hoặc bán tự động hóa thao tác failover nhằm giảm sai sót, rút ngắn thời gian khôi phục và chuẩn hóa evidence.
+Tự động hóa hoặc bán tự động hóa thao tác failover nhằm giảm sai sót, rút ngắn thời gian khôi phục và chuẩn hóa evidence.
 
-  ## 2. Mô tả tóm tắt
+## 2. Mô tả tóm tắt
 
-  Runbook này mô tả cách thực hiện promote, kiểm tra primary mới, kiểm tra replica, endpoint, application connection và log toàn bộ quá trình failover.
+Runbook này mô tả cách thực hiện promote, kiểm tra primary mới, kiểm tra replica, endpoint, application connection và log toàn bộ quá trình failover.
 
-  ## 3. Phạm vi áp dụng
+## 3. Phạm vi áp dụng
 
 Runbook áp dụng cho planned switchover, unplanned failover, DR drill, HA test và tình huống khẩn cấp cần chuyển vai trò primary sang node hoặc site khác.
 
@@ -278,7 +280,32 @@ Dừng execution nếu gặp một trong các điều kiện sau, trừ khi emer
 7. Application owner chưa sẵn sàng trong planned change.
 8. Monitoring không hoạt động và không có phương án kiểm chứng thay thế.
 
-## 13. Rollback hoặc fallback
+## 13. Cổng quyết định trong khi failover
+
+| Cổng | Câu hỏi bắt buộc | Kết quả |
+|---|---|---|
+| Go/No-go | Approval, owner, bridge, monitoring và rollback đã sẵn sàng chưa? | Go hoặc Stop |
+| Pre-failover | Target primary/standby có đủ điều kiện promote không? | Continue hoặc Stop |
+| Commit | Thao tác failover đã thực hiện và role mới đã xác nhận chưa? | Commit hoặc Escalate |
+| Endpoint | Listener/DNS/VIP/failover group/connection path đã đúng chưa? | Continue hoặc Fix |
+| Application | Ứng dụng đọc/ghi và transaction mẫu thành công chưa? | Handover hoặc Rollback/Fallback |
+| Closure | RTO/RPO, evidence, stakeholder confirmation đã đủ chưa? | Close hoặc Action item |
+
+## 14. Mẫu timeline tối thiểu
+
+| Mốc thời gian | Nội dung cần ghi |
+|---|---|
+| T-30/T-15 | Bridge mở, stakeholder sẵn sàng, freeze change |
+| T0 | Bắt đầu execution hoặc incident failover |
+| T1 | Pre-check hoàn tất |
+| T2 | Failover command/playbook bắt đầu |
+| T3 | Primary mới xác nhận |
+| T4 | Endpoint/connection path xác nhận |
+| T5 | Database và replica post-check hoàn tất |
+| T6 | Application smoke test hoàn tất |
+| T7 | Bàn giao, tính RTO/RPO, lưu evidence |
+
+## 15. Rollback hoặc fallback
 
 | Tình huống | Hướng xử lý |
 |---|---|
@@ -289,7 +316,7 @@ Dừng execution nếu gặp một trong các điều kiện sau, trừ khi emer
 | Replica không rejoin được | Bàn giao primary mới, tạo action item rebuild replica |
 | Có nguy cơ split brain | Fence old primary ngay lập tức, escalate DBA Lead |
 
-## 14. Evidence bắt buộc
+## 16. Evidence bắt buộc
 
 | Evidence | Bắt buộc | Ghi chú |
 |---|---:|---|
@@ -304,7 +331,7 @@ Dừng execution nếu gặp một trong các điều kiện sau, trừ khi emer
 | RTO/RPO calculation | Có | Thực tế so với cam kết |
 | Stakeholder confirmation | Có | Xác nhận của service owner hoặc app owner |
 
-## 15. Escalation
+## 17. Escalation
 
 | Tình huống | Escalation |
 |---|---|
@@ -316,7 +343,7 @@ Dừng execution nếu gặp một trong các điều kiện sau, trừ khi emer
 | DR site không đạt RTO | Service Owner, DR Manager |
 | Vấn đề bảo mật hoặc truy cập | Security Team |
 
-## 16. Tiêu chí hoàn tất
+## 18. Tiêu chí hoàn tất
 
 Runbook được coi là hoàn tất khi:
 
@@ -331,7 +358,7 @@ Runbook được coi là hoàn tất khi:
 9. Ticket được cập nhật kết quả.
 10. Nếu là incident hoặc emergency change, PIR/RCA được khởi tạo.
 
-## 17. Chỉ số liên quan
+## 19. Chỉ số liên quan
 
 | KPI | Công thức tham khảo |
 |---|---|

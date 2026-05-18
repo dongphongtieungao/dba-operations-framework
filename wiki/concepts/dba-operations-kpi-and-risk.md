@@ -6,10 +6,14 @@ created: 2026-05-15
 updated: 2026-05-15
 key_sources:
   - [[sources/dba-operations-framework]]
+  - [[sources/runbook-capacity-report]]
+  - [[sources/runbook-failover-execution]]
 related_concepts:
   - [[concepts/dba-evidence-driven-operations]]
   - [[concepts/dba-automation-lifecycle]]
   - [[concepts/business-continuity]]
+  - [[concepts/database-capacity-reporting]]
+  - [[concepts/dba-failover-execution-runbook]]
 confidence: unverified
 ---
 
@@ -26,6 +30,8 @@ DBA Operations KPI and Risk là lớp đo lường và quản trị rủi ro c�
 ## Key Sources
 
 - [[sources/dba-operations-framework]]
+- [[sources/runbook-capacity-report]]
+- [[sources/runbook-failover-execution]]
 
 ## Related Concepts
 
@@ -34,8 +40,9 @@ DBA Operations KPI and Risk là lớp đo lường và quản trị rủi ro c�
 - [[concepts/business-continuity]]
 - [[concepts/high-availability-and-disaster-recovery]]
 - [[concepts/azure-sql-monitoring-and-observability]]
+- [[concepts/database-capacity-reporting]]
+- [[concepts/dba-failover-execution-runbook]]
 
 ## Mentioned In
 
 ## Notes
-

@@ -3,13 +3,15 @@ doc_id: DBA-RBK-039
 title: "Runbook Restore Validation"
 doc_type: runbook
 priority: 1
-status: draft
+status: ready_for_review
 owner: DBA Team
 reviewer: DBA Lead
 approver: Service Owner
-version: 0.2
+version: 1.0
 created_date: 2026-05-15
 last_updated: 2026-05-18
+language: vi
+framework: DBA Operations Framework
 related_documents:
   - DBA-POL-005 Backup and Restore Policy
   - DBA-SOP-024 SOP Restore Operation
@@ -20,15 +22,15 @@ related_documents:
 
 # DBA-RBK-039 - Runbook Restore Validation
 
-  ## 1. Mục đích
+## 1. Mục đích
 
-  Tự động hóa việc kiểm tra sau restore để xác nhận database đã được phục hồi đúng, đủ và sẵn sàng bàn giao.
+Tự động hóa việc kiểm tra sau restore để xác nhận database đã được phục hồi đúng, đủ và sẵn sàng bàn giao.
 
-  ## 2. Mô tả tóm tắt
+## 2. Mô tả tóm tắt
 
-  Runbook này mô tả cách thiết kế và vận hành script validation sau restore, bao gồm kiểm tra object count, row count, checksum nếu có, trạng thái database, trạng thái ứng dụng và xuất kết quả nghiệm thu.
+Runbook này mô tả cách thiết kế và vận hành script validation sau restore, bao gồm kiểm tra object count, row count, checksum nếu có, trạng thái database, trạng thái ứng dụng và xuất kết quả nghiệm thu.
 
-  ## 3. Phạm vi áp dụng
+## 3. Phạm vi áp dụng
 
 Runbook áp dụng cho các hoạt động restore production, restore sang non-production, restore phục vụ DR drill, restore phục vụ kiểm thử dữ liệu, restore ad hoc theo yêu cầu nghiệp vụ.
 
@@ -286,7 +288,27 @@ Kiểm tra tối thiểu:
 | Không chạy được validation do lỗi credential | FAIL | Điều tra quyền hoặc service account |
 | Không đủ tiêu chí validation | WARN | Yêu cầu requester xác nhận giới hạn kiểm tra |
 
-## 13. Evidence bắt buộc
+## 13. Cổng nghiệm thu bắt buộc
+
+| Cổng | Điều kiện qua cổng |
+|---|---|
+| Restore completed | Restore log không có lỗi critical và target database ở trạng thái phù hợp |
+| Metadata validation | Object/schema/table/permission quan trọng đạt tiêu chí đã thống nhất |
+| Data validation | Row count, checksum, sample query hoặc business key check đạt ngưỡng |
+| Security validation | Không có quyền production không cần thiết; masking đạt nếu non-production |
+| Application validation | Smoke test hoặc requester sign-off đạt nếu scope yêu cầu |
+| Evidence completed | Restore log, validation report, raw output và recovery point evidence đã lưu |
+
+## 14. Điều kiện không bàn giao
+
+1. Có critical check FAIL.
+2. Không xác định được recovery point đã restore.
+3. Không chạy được validation profile do lỗi credential hoặc thiếu quyền.
+4. Dữ liệu nhạy cảm chưa được masking khi restore sang non-production.
+5. Application smoke test fail nhưng requester chưa chấp nhận rủi ro.
+6. Evidence thiếu restore log hoặc validation report.
+
+## 15. Evidence bắt buộc
 
 | Evidence | Bắt buộc | Ghi chú |
 |---|---:|---|
@@ -298,7 +320,7 @@ Kiểm tra tối thiểu:
 | Masking evidence | Có nếu non-production có dữ liệu nhạy cảm | Không lưu dữ liệu nhạy cảm thô trong evidence |
 | Screenshot dashboard | Tùy chọn | Khi cần chứng minh trạng thái ứng dụng |
 
-## 14. Escalation
+## 16. Escalation
 
 | Tình huống | Escalation |
 |---|---|
@@ -309,7 +331,7 @@ Kiểm tra tối thiểu:
 | Object invalid nhiều sau restore | DBA Lead, Application Owner |
 | Không thể xác nhận kết quả với requester | Service Owner |
 
-## 15. Tiêu chí hoàn tất
+## 17. Tiêu chí hoàn tất
 
 Runbook được coi là hoàn tất khi:
 
@@ -321,7 +343,7 @@ Runbook được coi là hoàn tất khi:
 6. Ticket được cập nhật kết quả cuối cùng.
 7. Action item được tạo nếu có WARN hoặc FAIL.
 
-## 16. Chỉ số liên quan
+## 18. Chỉ số liên quan
 
 | KPI | Công thức tham khảo |
 |---|---|

@@ -7,9 +7,11 @@ updated: 2026-05-15
 key_sources:
   - [[sources/sql-server-2022-administration-inside-out]]
   - [[sources/sql-server-dba-toolbox]]
+  - [[sources/runbook-user-provisioning]]
 related_concepts:
   - [[concepts/sql-server-extended-events-monitoring]]
   - [[concepts/private-endpoints]]
+  - [[concepts/database-user-provisioning-runbook]]
 confidence: unverified
 ---
 
@@ -27,11 +29,13 @@ SQL Server security auditing là nhóm script kiểm tra quyền, login, orphane
 
 - [[sources/sql-server-2022-administration-inside-out]]
 - [[sources/sql-server-dba-toolbox]]
+- [[sources/runbook-user-provisioning]]
 
 ## Related Concepts
 
 - [[concepts/transparent-data-encryption]]
 - [[concepts/sql-server-dba-toolbox]]
+- [[concepts/database-user-provisioning-runbook]]
 
 ## Mentioned In
 

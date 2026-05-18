@@ -3,13 +3,15 @@ doc_id: DBA-RBK-038
 title: "Runbook Backup Verification"
 doc_type: runbook
 priority: 1
-status: draft
+status: ready_for_review
 owner: DBA Team
 reviewer: DBA Lead
 approver: Service Owner
-version: 0.2
+version: 1.0
 created_date: 2026-05-15
 last_updated: 2026-05-18
+language: vi
+framework: DBA Operations Framework
 related_documents:
   - DBA-POL-005 Backup and Restore Policy
   - DBA-SOP-023 SOP Backup Operation
@@ -18,15 +20,15 @@ related_documents:
 
 # DBA-RBK-038 - Runbook Backup Verification
 
-  ## 1. Mục đích
+## 1. Mục đích
 
-  Tự động hóa việc kiểm tra trạng thái backup nhằm phát hiện sớm rủi ro mất khả năng phục hồi dữ liệu.
+Tự động hóa việc kiểm tra trạng thái backup nhằm phát hiện sớm rủi ro mất khả năng phục hồi dữ liệu.
 
-  ## 2. Mô tả tóm tắt
+## 2. Mô tả tóm tắt
 
-  Runbook này mô tả cách thiết kế, vận hành và kiểm soát script kiểm tra backup status, backup age, backup chain, dung lượng backup, lỗi backup gần nhất và sinh báo cáo daily.
+Runbook này mô tả cách thiết kế, vận hành và kiểm soát script kiểm tra backup status, backup age, backup chain, dung lượng backup, lỗi backup gần nhất và sinh báo cáo daily.
 
-  ## 3. Phạm vi áp dụng
+## 3. Phạm vi áp dụng
 
 Runbook áp dụng cho các hệ thống database production, staging quan trọng và các môi trường có yêu cầu kiểm soát backup định kỳ.
 
@@ -243,7 +245,27 @@ Kiểm tra tối thiểu:
 4. Azure Monitor alert cho backup hoặc restore capability
 5. Policy compliance theo subscription hoặc resource group
 
-## 12. Evidence bắt buộc
+## 12. Điều kiện tạo ticket hoặc incident
+
+| Điều kiện | Mức xử lý |
+|---|---|
+| Không có backup hợp lệ cho production trong ngưỡng RPO | Incident hoặc ticket P1/P2 theo criticality |
+| Backup chain broken | Escalate DBA Lead và tạo ticket xử lý ngay |
+| Backup file không truy cập được | Escalate Infra/Storage/Cloud Team |
+| Backup storage còn thấp hơn ngưỡng critical | Ticket capacity hoặc storage |
+| Backup encryption/retention không đúng policy | Ticket compliance hoặc security |
+| Không kiểm tra được backup do lỗi credential/metadata | Ticket vận hành để khôi phục khả năng kiểm chứng |
+
+## 13. Cổng kiểm soát tự động hóa
+
+1. Script phải trả exit code hoặc final result rõ ràng: PASS, WARN hoặc FAIL.
+2. Mọi FAIL phải có recommended_action và owner mặc định.
+3. Script không được xóa hoặc thay đổi backup trong quá trình verification.
+4. Raw output không được chứa secret, password hoặc dữ liệu nhạy cảm.
+5. Nếu chạy theo lịch, job phải có alert khi không chạy hoặc chạy quá lâu.
+6. Báo cáo daily phải có tổng số database trong inventory và số database đã kiểm tra để đo coverage.
+
+## 14. Evidence bắt buộc
 
 | Evidence | Bắt buộc | Ghi chú |
 |---|---:|---|
@@ -255,7 +277,7 @@ Kiểm tra tối thiểu:
 | Screenshot dashboard | Tùy chọn | Khi cần gửi khách hàng |
 | Action item | Có nếu WARN/FAIL | Owner và deadline |
 
-## 13. Escalation
+## 15. Escalation
 
 | Tình huống | Escalation |
 |---|---|
@@ -266,7 +288,7 @@ Kiểm tra tối thiểu:
 | Không truy cập được backup repository | Infra, Storage, Cloud Team |
 | Lỗi lặp lại hơn 2 lần | Problem Management hoặc RCA |
 
-## 14. Tiêu chí hoàn tất
+## 16. Tiêu chí hoàn tất
 
 Runbook được coi là hoàn tất khi:
 
@@ -277,7 +299,7 @@ Runbook được coi là hoàn tất khi:
 5. Evidence đã được lưu vào repository.
 6. Action item có owner và deadline.
 
-## 15. Chỉ số liên quan
+## 17. Chỉ số liên quan
 
 | KPI | Công thức tham khảo |
 |---|---|

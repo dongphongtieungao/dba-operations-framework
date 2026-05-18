@@ -7,9 +7,11 @@ updated: 2026-05-15
 key_sources:
   - [[sources/sql-server-2022-administration-inside-out]]
   - [[sources/sql-server-dba-toolbox]]
+  - [[sources/runbook-database-provisioning]]
 related_concepts:
   - [[concepts/sql-server-dba-toolbox]]
   - [[concepts/sql-server-query-store-analysis]]
+  - [[concepts/database-provisioning-runbook]]
 confidence: unverified
 ---
 
@@ -27,11 +29,13 @@ SQL Server configuration baseline là tập các cấu hình instance/database �
 
 - [[sources/sql-server-2022-administration-inside-out]]
 - [[sources/sql-server-dba-toolbox]]
+- [[sources/runbook-database-provisioning]]
 
 ## Related Concepts
 
 - [[concepts/sql-server-agent-job-operations]]
 - [[concepts/sql-server-performance-diagnostics]]
+- [[concepts/database-provisioning-runbook]]
 
 ## Mentioned In
 

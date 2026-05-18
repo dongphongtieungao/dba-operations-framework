@@ -7,9 +7,15 @@ updated: 2026-05-15
 key_sources:
   - [[sources/sql-server-2022-administration-inside-out]]
   - [[sources/sql-server-dba-toolbox]]
+  - [[sources/runbook-backup-verification]]
+  - [[sources/runbook-restore-validation]]
+  - [[sources/sql-server-operations-appendix]]
 related_concepts:
   - [[concepts/business-continuity]]
   - [[concepts/high-availability-and-disaster-recovery]]
+  - [[concepts/backup-verification-runbook]]
+  - [[concepts/restore-validation-runbook]]
+  - [[concepts/sql-server-operations-appendix]]
 confidence: unverified
 ---
 
@@ -27,11 +33,17 @@ SQL Server backup and restore operations là nhóm tác vụ tạo script phục
 
 - [[sources/sql-server-2022-administration-inside-out]]
 - [[sources/sql-server-dba-toolbox]]
+- [[sources/runbook-backup-verification]]
+- [[sources/runbook-restore-validation]]
+- [[sources/sql-server-operations-appendix]]
 
 ## Related Concepts
 
 - [[concepts/sql-server-storage-and-tempdb-operations]]
 - [[concepts/sql-server-dba-toolbox]]
+- [[concepts/backup-verification-runbook]]
+- [[concepts/restore-validation-runbook]]
+- [[concepts/sql-server-operations-appendix]]
 
 ## Mentioned In
 

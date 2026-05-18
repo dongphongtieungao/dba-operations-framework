@@ -6,10 +6,12 @@ created: 2026-05-15
 updated: 2026-05-15
 key_sources:
   - [[sources/azure-sql-documentation]]
+  - [[sources/azure-sql-operations-appendix]]
 related_concepts:
   - [[concepts/azure-sql-database]]
   - [[concepts/azure-sql-managed-instance]]
   - [[concepts/sql-server-on-azure-vms]]
+  - [[concepts/azure-sql-operations-appendix]]
 confidence: unverified
 ---
 
@@ -26,14 +28,15 @@ Azure SQL là họ sản phẩm cơ sở dữ liệu trên Azure dùng SQL Serve
 ## Key Sources
 
 - [[sources/azure-sql-documentation]]
+- [[sources/azure-sql-operations-appendix]]
 
 ## Related Concepts
 
 - [[concepts/database-migration]]
 - [[concepts/business-continuity]]
 - [[concepts/high-availability-and-disaster-recovery]]
+- [[concepts/azure-sql-operations-appendix]]
 
 ## Mentioned In
 
 ## Notes
-

@@ -10,10 +10,12 @@ key_sources:
   - [[sources/azure-sql-documentation]]
   - [[sources/azure-database-migration-service-documentation]]
   - [[sources/azure-database-migration-guides]]
+  - [[sources/azure-sql-operations-appendix]]
 related_concepts:
   - [[concepts/azure-sql]]
   - [[concepts/hyperscale]]
   - [[concepts/database-migration]]
+  - [[concepts/azure-sql-operations-appendix]]
 confidence: unverified
 ---
 
@@ -34,6 +36,7 @@ Azure SQL Database là dịch vụ cơ sở dữ liệu quan hệ được quả
 - [[sources/azure-sql-documentation]]
 - [[sources/azure-database-migration-service-documentation]]
 - [[sources/azure-database-migration-guides]]
+- [[sources/azure-sql-operations-appendix]]
 
 ## Related Concepts
 
@@ -41,6 +44,7 @@ Azure SQL Database là dịch vụ cơ sở dữ liệu quan hệ được quả
 - [[concepts/azure-sql-managed-instance]]
 - [[concepts/sql-server-on-azure-vms]]
 - [[concepts/online-and-offline-migration]]
+- [[concepts/azure-sql-operations-appendix]]
 
 ## Mentioned In
 

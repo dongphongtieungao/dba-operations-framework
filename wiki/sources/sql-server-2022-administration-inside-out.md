@@ -70,6 +70,8 @@ SQL Server 2022 Administration Inside Out là sách quản trị toàn diện ch
 - [[sources/azure-sql-documentation]]
 - [[sources/azure-database-migration-service-documentation]]
 - [[sources/azure-database-migration-guides]]
+- [[sources/sql-server-operations-appendix]]
+- [[sources/azure-sql-operations-appendix]]
 
 ## People
 
@@ -86,4 +88,3 @@ SQL Server 2022 Administration Inside Out là sách quản trị toàn diện ch
 - Cần đối chiếu thêm với tài liệu Microsoft Learn mới nhất trước khi dùng các chi tiết có thể thay đổi theo thời gian, đặc biệt là Azure Arc, Microsoft Defender, Azure SQL Managed Instance link và migration tooling.
 
 ## Notes
-

@@ -6,10 +6,14 @@ created: 2026-05-15
 updated: 2026-05-15
 key_sources:
   - [[sources/dba-operations-framework]]
+  - [[sources/runbook-database-provisioning]]
+  - [[sources/runbook-user-provisioning]]
 related_concepts:
   - [[concepts/dba-control-plane]]
   - [[concepts/dba-policy-sop-runbook-layering]]
   - [[concepts/dba-operations-kpi-and-risk]]
+  - [[concepts/database-provisioning-runbook]]
+  - [[concepts/database-user-provisioning-runbook]]
 confidence: unverified
 ---
 
@@ -26,6 +30,8 @@ DBA Automation Lifecycle là vòng đời biến tác vụ DBA thành automation
 ## Key Sources
 
 - [[sources/dba-operations-framework]]
+- [[sources/runbook-database-provisioning]]
+- [[sources/runbook-user-provisioning]]
 
 ## Related Concepts
 
@@ -34,8 +40,9 @@ DBA Automation Lifecycle là vòng đời biến tác vụ DBA thành automation
 - [[concepts/dba-operations-kpi-and-risk]]
 - [[concepts/sql-server-dba-toolbox]]
 - [[concepts/sql-server-agent-job-operations]]
+- [[concepts/database-provisioning-runbook]]
+- [[concepts/database-user-provisioning-runbook]]
 
 ## Mentioned In
 
 ## Notes
-

@@ -1,27 +1,18 @@
 ---
-doc_id: APP-060
-title: "Azure SQL Operations Appendix"
-doc_type: appendix
-implementation_order: 2
-status: ready_for_review
-owner: DBA Team
-reviewer: DBA Lead
-approver: Service Owner
-version: 1.0
-created_date: 2026-05-15
-last_updated: 2026-05-18
-language: vi
-framework: DBA Operations Framework
-related_documents:
-  - APP-056 SQL Server Operations Appendix
-  - DBA-POL-005 Backup and Restore Policy
-  - DBA-POL-007 Database HA and DR Policy
-  - DBA-STD-018 Database Monitoring Standard
-  - DBA-RBK-038 Runbook Backup Verification
-  - DBA-RBK-039 Runbook Restore Validation
-  - DBA-RBK-041 Runbook Failover Execution
-  - DBA-RBK-042 Runbook Database Health Check
-  - DBA-RBK-043 Runbook Capacity Report
+id: phu-luc-van-hanh-azure-sql-hoan-thien
+title: "Phụ lục vận hành Azure SQL - bản hoàn thiện đề xuất"
+type: output
+created: 2026-05-18
+updated: 2026-05-18
+covers:
+  - sources/azure-sql-operations-appendix
+  - sources/azure-sql-documentation
+  - sources/sql-server-2022-administration-inside-out
+  - sources/dba-operations-framework
+  - concepts/azure-sql
+  - concepts/azure-sql-database
+  - concepts/azure-sql-managed-instance
+  - concepts/azure-sql-monitoring-and-observability
 ---
 
 # APP-060 - Azure SQL Operations Appendix
@@ -30,24 +21,19 @@ related_documents:
 
 Phụ lục này đặc tả cách áp dụng DBA Operations Framework cho Azure SQL Database và Azure SQL Managed Instance. Nội dung giúp DBA chuyển các kiểm soát truyền thống như backup, restore, HA/DR, monitoring, performance, security, access control, capacity và evidence sang mô hình PaaS.
 
-## 2. Mô tả tóm tắt
-
-Tổng hợp mapping policy chung sang Azure SQL Database và Azure SQL Managed Instance, gồm backup built-in, PITR, Long-Term Retention, Query Store, elastic pool, Hyperscale, SQL Agent alternative, Azure Monitor, diagnostic settings, private endpoint, Microsoft Entra ID, TDE, failover group và capacity/cost control.
-
-## 3. Phạm vi áp dụng
+## 2. Phạm vi áp dụng
 
 Áp dụng cho Azure SQL Database, elastic pool, Hyperscale, serverless nếu được sử dụng, và Azure SQL Managed Instance. Với SQL Server cài trên Azure VM, sử dụng APP-056 vì trách nhiệm vận hành vẫn gần với SQL Server truyền thống.
 
-## 4. Nguyên tắc sử dụng phụ lục DBMS
+## 3. Nguyên tắc vận hành Azure SQL
 
-1. Policy và standard chung vẫn là nguồn kiểm soát chính.
-2. PaaS giảm việc quản trị hạ tầng nhưng không loại bỏ trách nhiệm DBA về dữ liệu, cấu hình, bảo mật, hiệu năng, chi phí và evidence.
-3. Backup tự động không thay thế restore drill và validation.
-4. Failover group hoặc geo-replication chỉ có giá trị khi application connection strategy đã được thiết kế và kiểm thử.
-5. Diagnostic settings, Azure Monitor, Query Store và alert rule phải được bật theo chuẩn trước khi bàn giao production.
-6. Mọi exception về public access, firewall, private endpoint, LTR, retention, alert hoặc access control cần owner và approval.
+1. PaaS giảm việc quản trị hạ tầng nhưng không loại bỏ trách nhiệm DBA về dữ liệu, cấu hình, bảo mật, hiệu năng, chi phí và evidence.
+2. Backup tự động không thay thế restore drill và validation.
+3. Failover group hoặc geo-replication chỉ có giá trị khi application connection strategy đã được thiết kế và kiểm thử.
+4. Diagnostic settings, Azure Monitor, Query Store và alert rule phải được bật theo chuẩn trước khi bàn giao production.
+5. Mọi exception về public access, firewall, private endpoint, LTR, retention, alert hoặc access control cần owner và approval.
 
-## 5. Khác biệt vận hành theo service model
+## 4. Khác biệt vận hành theo service model
 
 | Chủ đề | Azure SQL Database | Azure SQL Managed Instance |
 |---|---|---|
@@ -57,28 +43,25 @@ Tổng hợp mapping policy chung sang Azure SQL Database và Azure SQL Managed 
 | HA | Built-in HA theo tier, zone redundancy nếu cấu hình | Built-in HA, zone redundancy nếu cấu hình |
 | DR | Geo-restore, active geo-replication, failover group | Failover group, geo-restore |
 | Performance | DTU/vCore, elastic pool, Query Store, automatic tuning | vCore, Query Store, wait stats, gần SQL Server hơn |
-| Security | Microsoft Entra ID, firewall, private endpoint, TDE | Microsoft Entra ID, VNet integration, TDE |
 | Migration fit | App cloud-native hoặc database độc lập | Migration SQL Server cần compatibility cao |
 
-## 6. Backup, PITR và Long-Term Retention
+## 5. Backup, PITR và Long-Term Retention
 
-1. Azure SQL có backup tự động built-in, nhưng DBA vẫn phải kiểm tra policy, retention và khả năng restore.
-2. Xác nhận PITR retention cho từng database hoặc managed instance theo policy.
-3. Cấu hình Long-Term Retention nếu có yêu cầu lưu trữ dài hạn, audit hoặc compliance.
-4. Restore drill phải chạy sang target test hoặc DR phù hợp, có recovery point, restore duration và validation report.
-5. Geo restore hoặc failover group phải được kiểm tra theo yêu cầu DR.
-6. Evidence restore phải ghi rõ source, target, restore point, start/end time, người thực hiện và kết quả validation.
+1. Xác nhận PITR retention cho từng database hoặc managed instance theo policy.
+2. Cấu hình Long-Term Retention nếu có yêu cầu lưu trữ dài hạn, audit hoặc compliance.
+3. Restore drill phải chạy sang target test hoặc DR phù hợp, có recovery point, restore duration và validation report.
+4. Backup verification trong Azure SQL nên kiểm tra policy, retention, restore capability, LTR state và alert liên quan thay vì chỉ nhìn job backup.
+5. Evidence phải ghi rõ source, target, restore point, start/end time, người thực hiện và kết quả validation.
 
-## 7. Failover và DR
+## 6. HA/DR và failover
 
 1. Với workload cần DR, thiết kế failover group hoặc geo-replication cùng với endpoint mà ứng dụng sẽ dùng.
-2. Ứng dụng nên dùng listener endpoint của failover group nếu yêu cầu DR tự động hoặc bán tự động.
-3. Planned failover phải đi qua RFC; emergency failover phải có emergency change và post-review.
-4. Sau failover cần kiểm tra primary role, replication state, connectivity, firewall/private endpoint, login/user, application smoke test và monitoring.
-5. Đo RTO/RPO thực tế trong drill, không chỉ ghi theo cam kết thiết kế.
-6. Nếu dùng private endpoint, cần kiểm tra DNS resolution và network path ở cả primary và secondary region.
+2. Planned failover phải đi qua RFC; emergency failover phải có emergency change và post-review.
+3. Sau failover cần kiểm tra primary role, replication state, connectivity, firewall/private endpoint, login/user, application smoke test và monitoring.
+4. Đo RTO/RPO thực tế trong drill, không chỉ ghi theo cam kết thiết kế.
+5. Nếu dùng private endpoint, cần kiểm tra DNS resolution và network path ở cả primary và secondary region.
 
-## 8. Security và access control
+## 7. Security và access control
 
 | Hạng mục | Kiểm soát |
 |---|---|
@@ -89,15 +72,15 @@ Tổng hợp mapping policy chung sang Azure SQL Database và Azure SQL Managed 
 | Audit | Bật audit/diagnostic log theo yêu cầu compliance |
 | Defender/Threat | Kiểm tra Microsoft Defender for SQL nếu policy yêu cầu |
 
-## 9. Monitoring và observability
+## 8. Monitoring và observability
 
-1. Bật diagnostic settings để gửi metric/log tới Log Analytics, Event Hub hoặc storage theo chuẩn.
+1. Bật diagnostic settings gửi metric/log tới Log Analytics, Event Hub hoặc storage theo chuẩn.
 2. Theo dõi CPU, data IO, log IO, storage, workers/sessions, deadlock, blocking, connection failure, DTU/vCore và elastic pool utilization.
 3. Query Store dùng để phân tích plan regression, top query, wait category và thay đổi sau deploy.
 4. Alert rule phải map với SOP: backup/restore, capacity, performance, blocking/deadlock, failover, security và connectivity.
 5. Dashboard cần phân biệt database-level, elastic pool-level, managed instance-level và application-level signal.
 
-## 10. Performance và tuning
+## 9. Performance và tuning
 
 1. Với Azure SQL Database, kiểm tra service tier, compute size, elastic pool pressure, storage và workload pattern trước khi tuning query.
 2. Với Managed Instance, áp dụng tư duy SQL Server nhưng vẫn tính đến giới hạn PaaS, storage, network và maintenance window của nền tảng.
@@ -105,7 +88,7 @@ Tổng hợp mapping policy chung sang Azure SQL Database và Azure SQL Managed 
 4. Không áp dụng index recommendation tự động nếu chưa xem Query Store, logical reads, write overhead và duplicate/unused indexes.
 5. Khi tăng vCore/DTU hoặc chuyển tier, cần ghi lý do, thời gian, cost impact và tiêu chí rollback.
 
-## 11. Capacity và cost
+## 10. Capacity và cost
 
 | Nhóm | Kiểm tra |
 |---|---|
@@ -118,7 +101,7 @@ Tổng hợp mapping policy chung sang Azure SQL Database và Azure SQL Managed 
 
 Capacity report cần tạo action item khi forecast vượt ngưỡng hoặc khi chi phí tăng không khớp workload.
 
-## 12. SQL Agent alternative
+## 11. SQL Agent alternative
 
 | Nhu cầu | Azure SQL Database | Azure SQL Managed Instance |
 |---|---|---|
@@ -129,7 +112,7 @@ Capacity report cần tạo action item khi forecast vượt ngưỡng hoặc kh
 
 Mọi automation thay thế SQL Agent vẫn cần owner, change control, log output, retry policy và alert khi thất bại.
 
-## 13. Azure SQL checklist vận hành
+## 12. Checklist vận hành Azure SQL
 
 | Hạng mục | Kiểm tra |
 |---|---|
@@ -142,40 +125,11 @@ Mọi automation thay thế SQL Agent vẫn cần owner, change control, log out
 | Cost | SKU, utilization, reserved/serverless fit |
 | Evidence | Ticket, dashboard/export, restore/failover validation |
 
-## 14. Điều kiện exception
+## 13. Điều kiện exception
 
 Exception bắt buộc nếu database production không có diagnostic settings, không có alert critical, không có restore drill, không cấu hình LTR dù policy yêu cầu, public endpoint mở ngoài chuẩn, thiếu private endpoint theo policy, failover group chưa test hoặc automation không có evidence.
 
-## 15. Yêu cầu evidence
+## 14. Tiêu chí nghiệm thu
 
-Mọi hoạt động phát sinh từ tài liệu này cần để lại evidence tối thiểu sau:
+Phụ lục được xem là áp dụng đúng khi Azure SQL estate có mapping service model rõ ràng, backup/restore được kiểm chứng, DR endpoint được test, monitoring và alert đã bật, security/network đúng policy, capacity/cost có forecast, automation có evidence và mọi exception có owner cùng ngày review.
 
-1. Ticket ID hoặc change ID.
-2. Người yêu cầu, người thực hiện, người phê duyệt nếu có.
-3. Thời gian bắt đầu và kết thúc.
-4. Input đã sử dụng.
-5. Output hoặc log thao tác.
-6. Kết quả kiểm tra sau thực hiện.
-7. Đường dẫn dashboard, report, script output hoặc artifact liên quan.
-8. Với restore/failover, evidence phải ghi rõ source, target, restore/failover point, duration, validation result và người xác nhận.
-
-## 16. Tiêu chí nghiệm thu
-
-1. Azure SQL estate có mapping service model rõ ràng.
-2. Backup/restore được kiểm chứng.
-3. DR endpoint được test.
-4. Monitoring và alert đã bật.
-5. Security/network đúng policy.
-6. Capacity/cost có forecast.
-7. Automation có evidence.
-8. Mọi exception có owner cùng ngày review.
-
-## 17. Quản trị thay đổi tài liệu
-
-Tài liệu phải được review ít nhất mỗi 6 tháng hoặc sau các sự kiện sau:
-
-1. Có sự cố P1 hoặc P2 liên quan.
-2. Có thay đổi lớn về kiến trúc database.
-3. Có thay đổi về yêu cầu bảo mật, audit hoặc compliance.
-4. Có thay đổi công cụ vận hành hoặc nền tảng cloud.
-5. Có phát hiện sai lệch giữa tài liệu và thực tế vận hành.

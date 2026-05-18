@@ -7,12 +7,14 @@ updated: 2026-05-15
 key_sources:
   - [[sources/master-dba-runbook-backend-java-azure-sql]]
   - [[sources/sql-server-2022-administration-inside-out]]
+  - [[sources/sql-server-operations-appendix]]
 related_concepts:
   - [[concepts/sql-server-configuration-baseline]]
   - [[concepts/sql-server-performance-diagnostics]]
   - [[concepts/sql-server-backup-restore-operations]]
   - [[concepts/high-availability-and-disaster-recovery]]
   - [[concepts/sql-server-security-auditing]]
+  - [[concepts/sql-server-operations-appendix]]
 confidence: unverified
 ---
 
@@ -30,6 +32,7 @@ SQL Server administration là thực hành vận hành nền tảng SQL Server s
 
 - [[sources/master-dba-runbook-backend-java-azure-sql]]
 - [[sources/sql-server-2022-administration-inside-out]]
+- [[sources/sql-server-operations-appendix]]
 
 ## Related Concepts
 
@@ -38,6 +41,7 @@ SQL Server administration là thực hành vận hành nền tảng SQL Server s
 - [[concepts/sql-server-backup-restore-operations]]
 - [[concepts/high-availability-and-disaster-recovery]]
 - [[concepts/sql-server-security-auditing]]
+- [[concepts/sql-server-operations-appendix]]
 
 ## Mentioned In
 

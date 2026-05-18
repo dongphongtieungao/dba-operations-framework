@@ -53,6 +53,8 @@ Tài liệu này là bộ hướng dẫn tổng quan cho họ sản phẩm [[con
 
 - [[sources/azure-database-migration-guides]]
 - [[sources/azure-database-migration-service-documentation]]
+- [[sources/azure-sql-operations-appendix]]
+- [[sources/sql-server-operations-appendix]]
 
 ## People
 
